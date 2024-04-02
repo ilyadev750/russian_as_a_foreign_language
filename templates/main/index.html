@@ -73,13 +73,11 @@
                         <a href="about.html" class="nav-item nav-link">О нас</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Профиль</a>
+                            {% for profile in profiles %}
                             <div class="dropdown-menu">
-                                {% comment %} Технический Гуманитарный Медико-биологически Естественно-научный(экономический) {% endcomment %}
-                                <a href="blog.html" class="dropdown-item">Технический</a> 
-                                <a href="single.html" class="dropdown-item">Гуманитарный</a>
-                                <a href="single.html" class="dropdown-item">Медико-биологический</a>
-                                <a href="single.html" class="dropdown-item">Естественно-научный</a>
+                                <a href="{% url 'get_profile_lections' profile.slug %}" class="dropdown-item">{{ profile.specialization_name }}</a> 
                             </div>
+                            {% endfor %}
                         </div>
                         <a href="about.html" class="nav-item nav-link">Пожертвовать</a>
                     </div>
