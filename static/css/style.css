@@ -223,7 +223,7 @@ a:focus {
         width: 100%;
         top: 35px;
         padding: 20px 60px;
-        background: rgba(9, 42, 73, .2)!important;
+        background: #092a49!important;
         z-index: 9;
     }
     
@@ -1516,4 +1516,19 @@ a:focus {
         margin: 5px 0;
         text-align: center;
     }
+}
+
+
+.lection-header {
+    text-align: center;
+}
+
+.lections-list {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.lections-list>p {
+    font-size: 16px;
+    color: #0796fe;
 }

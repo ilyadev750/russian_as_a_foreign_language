@@ -6,4 +6,4 @@ def index(request):
     context = {
         "profiles": profiles
     }
-    return render(request, "main/index.html")
+    return render(request, "main/index.html", context)
