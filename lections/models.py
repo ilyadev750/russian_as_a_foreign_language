@@ -6,7 +6,7 @@ class Specialization(models.Model):
         max_length=100, unique=True, verbose_name="Профиль"
     )
     slug = models.SlugField(max_length=50, verbose_name="URL", default='slug')
-
+    
     class Meta:
         verbose_name = "Профиль"
         verbose_name_plural = "Профили"

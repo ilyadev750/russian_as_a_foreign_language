@@ -1532,3 +1532,32 @@ a:focus {
     font-size: 16px;
     color: #0796fe;
 }
+
+.dict-table {
+    border: solid;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#dict-table-style {
+    border: solid;
+}
+
+#rus {
+    font-family: 'Times New Roman';
+    color: black;
+    border: solid #797979;
+    text-align: center;
+    padding: 5px;
+}
+
+#eng {
+    margin-left: 10px;
+    font-weight: normal;
+    text-align: center;
+    padding: 5px;
+}
+
+.red {
+    color: red;
+}

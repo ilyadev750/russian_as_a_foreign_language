@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+Список лекций
+{% endblock %}
+
+{% block content %}
+
+<div class="about mt-125">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-9">
+                <div class="lection-header">
+                    {% comment %} <p>Learn About Us</p> {% endcomment %}
+                    <h3>Словарь лекции {{ lection.lection_name }}</h3>
+                </div>
+                <div class="lections-list">
+                    <table class="dict-table">
+                        <tbody>
+                            {% for value in values %}
+                            <tr id="dict-table-style">
+                              {{ red|add_class:"red" }}
+                              <th id="rus" "dict-table-style">{{value.termin_in_rus}}</th>
+                              <th id="eng" "dict-table-style">{{value.termin_in_eng}} </th>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

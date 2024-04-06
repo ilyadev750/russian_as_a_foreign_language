@@ -12,12 +12,11 @@
         <div class="row align-items-center">
             <div class="col-md-9">
                 <div class="lection-header">
-                    {% comment %} <p>Learn About Us</p> {% endcomment %}
                     <h3>Лекции по профилю</h3>
                 </div>
                 <div class="lections-list">
                     {% for lection in lections %}
-                        <p>{{ lection.lection_name }}</p>
+                        <p><a class="" href="{% url 'get_lection_dictionary' lection_slug=lection.slug %}">{{ lection.lection_name }}</a></p>
                     {% endfor %}
                 </div>
             </div>
