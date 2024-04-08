@@ -2,6 +2,33 @@ from django.shortcuts import render
 from .models import Specialization, Lection
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
+from .forms import CreateLection
+from .models import Specialization, Lection
+from django.shortcuts import render, redirect
+
+
+def create_new_lection(request):
+
+    if request.method == 'POST':
+        form = CreateLection(request.POST)
+
+        if form.is_valid():
+            lection = Lection()
+            lection.lection_name = form.cleaned_data["lection_name"]
+            lection.profile_id = form.cleaned_data["profile_id"]
+            lection.slug = form.cleaned_data["slug"]
+            lection.save()
+            return redirect('home')
+        
+    form = CreateLection()
+    context = {
+        'form': form
+    }
+    return render(request, 'lections/create_new_lection.html', context)
+
+
+def add_lection_content(request, slug, page):
+    pass
 
 
 def get_profile_lections(request, profile_slug):
@@ -19,5 +46,3 @@ def get_profile_lections(request, profile_slug):
     return render(request, 'lections/lections_list.html', context)
 
 
-def get_lection_content(request, slug, page):
-    pass

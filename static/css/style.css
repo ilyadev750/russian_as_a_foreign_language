@@ -1558,6 +1558,6 @@ a:focus {
     padding: 5px;
 }
 
-.red {
-    color: red;
+#my-row {
+    display: inline-block;
 }

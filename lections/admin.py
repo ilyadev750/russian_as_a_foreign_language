@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Specialization, Lection, Content
+from .models import Specialization, Lection, Paragraph
 
 admin.site.register(Specialization)
 admin.site.register(Lection)
-admin.site.register(Content)
+admin.site.register(Paragraph)
