@@ -6,4 +6,5 @@ urlpatterns = [
     path('create-new-lection/', create_new_lection, name='create_new_lection'),
     path('<slug:profile_slug>/', get_profile_lections, name='get_profile_lections'),
     path('<slug:lection_slug>/add/', add_lection_content, name='add_lection_content'),
+    path('<slug:lection_slug>/', add_lection_content, name='add_lection_content'),
 ]

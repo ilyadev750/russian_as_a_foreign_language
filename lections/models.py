@@ -23,6 +23,7 @@ class Lection(models.Model):
         Specialization, on_delete=models.CASCADE, verbose_name="Профиль", default=None
     )
     slug = models.SlugField(max_length=50, unique=True, verbose_name="URL")
+    in_production = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "лекция"

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Lection
+from .models import Lection, Paragraph
 
 
 class CreateLection(forms.ModelForm):
@@ -13,6 +13,11 @@ class CreateLection(forms.ModelForm):
         }
 
 
-class AddParagraph(forms.Form):
-    paragraph = forms.TextInput()
-    paragraph_number = forms.IntegerField()
+class AddParagraph(forms.ModelForm):
+    class Meta:
+        model = Paragraph
+        fields = ["paragraph", "paragraph_number"]
+        labels = {
+            "paragraph": 'Абзац',
+            "paragraph_number": 'Номер абзаца',
+        }
