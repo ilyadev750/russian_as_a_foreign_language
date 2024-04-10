@@ -13,6 +13,7 @@
             <div class="col-md-9">
                 <div class="lection-header">
                     <h3>Словарь лекции {{ lection.lection_name }}</h3>
+                    {{ red }}
                 </div>
                 <div class="lections-list">
                     <table class="dict-table">
@@ -25,6 +26,9 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                </div>
+                <div>
+                    <a class="" href="{% url 'get_lection_content' lection_slug=lection.slug %}">Приступить к лекции</a>
                 </div>
             </div>
         </div>

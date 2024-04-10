@@ -1561,3 +1561,7 @@ a:focus {
 #my-row {
     display: inline-block;
 }
+
+#red {
+    color: red;
+}

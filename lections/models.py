@@ -45,6 +45,6 @@ class Paragraph(models.Model):
         verbose_name_plural = "Контент лекций"
 
     def __str__(self) -> str:
-        return f'{self.content_number}'
+        return f'{self.lection_id} - {self.paragraph_number}'
 
     

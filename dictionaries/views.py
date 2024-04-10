@@ -17,8 +17,8 @@ def get_lection_dictionary(request, lection_slug):
     values = Dictionary.objects.filter(lection_id=lection)
 
     # red = '(1)STYLESTYleSTYLE(1)(1)STYLESTYleSTYLE(1)(1)STYLESTYleSTYLE(1)'
-    # pattern_1 = "\D1\D\w+\D1\D"
-    # red = re.sub(pattern_1, '<span class="red">JURASSIC PARK</span>', red)
+    # pattern_1 = "(\D1\D\w+\D1\D)"
+    # red = re.sub(pattern_1, '<span id="red">\\1</span>', red)
     # red = mark_safe(red)
 
     context = {
