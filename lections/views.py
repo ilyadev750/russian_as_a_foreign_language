@@ -83,3 +83,7 @@ def get_lection_content(request, lection_slug):
     }
 
     return render(request, 'lections/lection_content.html', context)
+
+
+# добавить картинки к абзацу
+# добавить аудиозаписи к абзацу
