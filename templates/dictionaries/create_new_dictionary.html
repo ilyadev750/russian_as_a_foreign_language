@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+Создать словарь
+{% endblock %}
+
+{% block content %}
+
+<div class="about mt-125">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-9">
+                <div class="lection-header">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %} 
+                        {{ formset.as_p }}
+                        <div>
+                            <button class="save-button" type="submit" name="save">Создать словарь</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

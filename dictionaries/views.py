@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
 from .models import Dictionary
 from lections.models import Lection
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
-import re
+from .forms import DictionaryFormset
+
 
 
 def get_lection_dictionary(request, lection_slug):
@@ -28,3 +29,16 @@ def get_lection_dictionary(request, lection_slug):
     }
     
     return render(request, 'dictionaries/dictionary.html', context)
+
+
+def create_new_dictionary(request, lection_slug):
+
+
+    if request.method == 'POST':
+        formset = DictionaryFormset(request.POST)
+        instances = formset.save()
+        return redirect('home')
+    context = {
+        'formset': DictionaryFormset(queryset=Dictionary.objects.none())
+    }
+    return render(request, 'dictionaries/create_new_dictionary.html', context)    

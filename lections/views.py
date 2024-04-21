@@ -20,7 +20,7 @@ def create_new_lection(request):
             lection.profile_id = form.cleaned_data["profile_id"]
             lection.slug = form.cleaned_data["slug"]
             lection.save()
-            return redirect('add_lection_content', lection_slug=lection.slug)
+            return redirect('create_new_dictionary', lection_slug=lection.slug)
         
     form = CreateLection()
     context = {
@@ -85,5 +85,8 @@ def get_lection_content(request, lection_slug):
     return render(request, 'lections/lection_content.html', context)
 
 
-# добавить картинки к абзацу
-# добавить аудиозаписи к абзацу
+# перейти на создание лекции
+# ввести название лекции и категорию
+# перейти на создание словаря (formset)
+# перейти на создание абзаца с картинками и аудиозаписями (сложная форма)
+# завершть создание лекции или продолжить ее заполнение
