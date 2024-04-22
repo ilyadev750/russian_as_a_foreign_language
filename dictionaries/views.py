@@ -33,12 +33,19 @@ def get_lection_dictionary(request, lection_slug):
 
 def create_new_dictionary(request, lection_slug):
 
-
     if request.method == 'POST':
         formset = DictionaryFormset(request.POST)
-        instances = formset.save()
-        return redirect('home')
+        if formset.is_valid():
+            lection_id = Lection.objects.get(slug=lection_slug)
+            for form in formset:
+                dictionary_obj = Dictionary(
+                    termin_in_rus=form.cleaned_data['termin_in_rus'],
+                    termin_in_eng=form.cleaned_data['termin_in_eng'],
+                    lection_id=lection_id
+                )
+                dictionary_obj.save()
+                return redirect('home')
     context = {
         'formset': DictionaryFormset(queryset=Dictionary.objects.none())
     }
-    return render(request, 'dictionaries/create_new_dictionary.html', context)    
+    return render(request, 'dictionaries/create_new_dictionary.html', context)
