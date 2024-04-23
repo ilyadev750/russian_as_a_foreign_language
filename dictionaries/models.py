@@ -10,6 +10,7 @@ class Dictionary(models.Model):
     class Meta:
         verbose_name = "словарь"
         verbose_name_plural = "словари"
+        unique_together = ('termin_in_rus', 'termin_in_eng', 'lection_id')
 
     def __str__(self) -> str:
         return f'{self.termin_in_rus} - {self.termin_in_eng} - {self.lection_id}'

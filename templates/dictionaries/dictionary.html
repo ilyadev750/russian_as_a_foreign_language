@@ -22,7 +22,9 @@
                             <tr id="dict-table-style">
                               <th id="rus" "dict-table-style">{{value.termin_in_rus}}</th>
                               <th id="eng" "dict-table-style">{{value.termin_in_eng}}</th>
-                              <th id="eng" "dict-table-style"><a href="{{ delete_dict_item_url }}?pk={{value.pk}}">Удалить</a></th>
+                              {% if del %}
+                                <th id="eng" "dict-table-style"><a href="{{ delete_dict_item_url }}?pk={{value.pk}}">{{ delete_text }}</a></th>
+                              {% endif %}
                             </tr>
                             {% endfor %}
                         </tbody>

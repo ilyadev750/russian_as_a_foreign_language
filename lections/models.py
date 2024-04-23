@@ -43,6 +43,7 @@ class Paragraph(models.Model):
     class Meta:
         verbose_name = "Контент лекции"
         verbose_name_plural = "Контент лекций"
+        
 
     def __str__(self) -> str:
         return f'{self.lection_id} - {self.paragraph_number}'
