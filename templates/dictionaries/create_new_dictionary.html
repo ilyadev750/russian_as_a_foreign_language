@@ -40,13 +40,7 @@
                             <button class="save-button" type="submit" name="add">Добавить термины</button>
                         </div>
                     </form>
-                    <form action="{{ get_lection_dictionary }}?action={{ look }}" target="_blank">
-                        <button>Просмотреть словарь</button>
-                    </form>
-                    <form action="{{ get_lection_dictionary }}?action={{ delete }}" target="_blank">
-                        <button>Удалить термины</button>
-                    </form>
-                    <a href="{{ get_lection_dictionary }}?action={{ look }}"></a>
+                    <a href="{% url 'get_lection_dictionary' lection_slug=lection_slug %}">Посмотреть словарь</a>
                 </div>
             </div>
         </div>

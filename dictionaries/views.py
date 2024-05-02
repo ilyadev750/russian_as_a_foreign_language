@@ -21,32 +21,12 @@ def get_lection_dictionary(request, lection_slug):
     # pattern_1 = "(\D1\D\w+\D1\D)"
     # red = re.sub(pattern_1, '<span id="red">\\1</span>', red)
     # red = mark_safe(red)
+
     context = {
         'values': values,
         'lection': lection,
-    }
-    if action == 'look':
-        context['delete_dict_item_url'] = ''
-        context['action'] = 'look'
-    elif action == 'delete':
-        if request.user.is_superuser:
-            context['delete_dict_item_url'] = reverse(
-                'delete_dictionary_item', args=[lection_slug]
-                )
-            context['action'] = 'delete'
-            context['delete_text'] = 'Удалить'
-    # if request.user.is_superuser:
-    #     delete_dict_item_url = reverse('delete_dictionary_item', args=[lection_slug])
-    # else:
-    #     delete_dict_item_url = ''
-    # context = {
-    #     'values': values,
-    #     'lection': lection,
-    #     'delete_dict_item_url': '',
-    #     'del': 'Удалить'
         # 'red': red,
-    print(action)
-    print(context)
+    }
     return render(request, 'dictionaries/dictionary.html', context)
 
 
@@ -68,21 +48,16 @@ def create_new_dictionary(request, lection_slug):
                     break
             if "save" in request.POST:
                 return redirect('home')
-    
-
 
     context = {
         'formset': DictionaryFormset(queryset=Dictionary.objects.none()),
-        'get_lection_dictionary': reverse('get_lection_dictionary', args=[lection_slug]),
-        'look': 'look',
-        'delete': 'delete'
+        'lection_slug': lection_slug
     }
     return render(request, 'dictionaries/create_new_dictionary.html', context)
 
 
-def delete_dictionary_item(request, lection_slug):
+def delete_dictionary_item(request, lection_slug, pk):
     if request.user.is_superuser:
-        pk = request.GET.get('pk')
-        dictionary = Dictionary.objects.get(pk=int(pk))
+        dictionary = Dictionary.objects.get(pk=pk)
         dictionary.delete()
         return redirect('get_lection_dictionary', lection_slug)

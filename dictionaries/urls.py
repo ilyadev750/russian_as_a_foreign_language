@@ -9,7 +9,7 @@ urlpatterns = [
     path('<slug:lection_slug>/dictionary/',
          get_lection_dictionary,
          name='get_lection_dictionary'),
-    path('<slug:lection_slug>/dictionary/delete/',
+    path('<slug:lection_slug>/dictionary/delete/<int:pk>/',
          delete_dictionary_item,
          name='delete_dictionary_item')
 
