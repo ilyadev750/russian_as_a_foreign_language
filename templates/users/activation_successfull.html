@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block title %}
+Активировать аккаунт
+{% endblock %}
+
+
+{% block content %}
+<div class="about mt-125">
+  <div class="container">
+      <div class="row align-items-center">
+          <div class="col-md-9">
+              <div class="lection-header">
+                <h2>Аккаунт успешно активирован!</h2>
+                    <p>
+                        {{ success_activation }}
+                    </p>
+                <a href="{% url 'login_user' %}" class="dropdown-item">Войти в личный кабинет</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

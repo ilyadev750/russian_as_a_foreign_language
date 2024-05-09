@@ -1,0 +1,33 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block title %}
+Войти в личный кабинет
+{% endblock %}
+
+
+{% block content %}
+<div class="about mt-125">
+  <div class="container">
+      <div class="row align-items-center">
+          <div class="col-md-9">
+              <div class="lection-header">
+                <h2>Войти в аккаунт</h2>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <p>
+                      {{ field.errors }}
+                      {{ field.label_tag }} {{ field }}
+                    </p>
+                    {% endfor %}
+                    {{ error }}
+                    <button type="submit">Подтвердить</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
