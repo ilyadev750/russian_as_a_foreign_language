@@ -72,8 +72,12 @@ def login_user(request):
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            return redirect("home")
+            if user.is_active:
+                login(request, user)
+                return redirect("home")
+            else:
+                form = AuthenticationForm()
+                error = 'Пользователь не активирован. Пожалуйста, получите ссылку на активацию!'
         else:
             form = AuthenticationForm()
             context = {
@@ -83,9 +87,16 @@ def login_user(request):
             return render(request, "users/login.html", context)
     else:
         form = AuthenticationForm()
-    return render(request, "users/login.html", {"form": form, "error": ''})
+        error = ''
+    return render(request, "users/login.html", {"form": form, "error": error})
 
 
 def logout_user(request):
     logout(request)
     return redirect("home")
+
+
+def get_activation_link(request):
+    pass
+    # реализовать алгоритм активации существующего аккаунта
+    # добавить реализацию изменения пароля
