@@ -90,12 +90,10 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Профиль</a>
                             <div class="dropdown-menu">
-                                {% comment %} {% for profile in profiles %} {% endcomment %}
                                 <a href="{% url 'get_profile_lections' profile_slug='technichesky' %}" class="dropdown-item">Технический</a>
                                 <a href="{% url 'get_profile_lections' profile_slug='gumanitarny' %}" class="dropdown-item">Гуманитарный</a>
                                 <a href="{% url 'get_profile_lections' profile_slug='medico-biologichesky' %}" class="dropdown-item">Медико-биологический</a>
                                 <a href="{% url 'get_profile_lections' profile_slug='estestvenno-nauchny' %}" class="dropdown-item">Естественно-научный</a>
-                                {% comment %} {% endfor %}     {% endcomment %}
                             </div>
                         </div>
                         <a href="about.html" class="nav-item nav-link">Пожертвовать</a>
@@ -104,17 +102,19 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ user.username }}</a>
                             <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item">Персональные данные</a>
-                                <a href="#" class="dropdown-item">Действующие подписки</a>
-                                <a href="{% url 'logout_user' %}" class="dropdown-item">Выйти из личного кабинета</a>
+                                <a href="#" class="dropdown-item">Аккаунт</a>
+                                <a href="#" class="dropdown-item">Подписки</a>
+                                <a href="{% url 'password_change' %}" class="dropdown-item">Поменять пароль</a>
+                                <a href="{% url 'logout_user' %}" class="dropdown-item">Выйти</a>
                             </div>
                         </div>
                         {% else %}
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Пользователь</a>
                             <div class="dropdown-menu">
-                                <a href="{% url 'login_user' %}" class="dropdown-item">Войти в личный кабинет</a>
+                                <a href="{% url 'login_user' %}" class="dropdown-item">Войти</a>
                                 <a href="{% url 'signup' %}" class="dropdown-item">Регистрация</a>
+                                <a href="{% url 'get_activation_link' %}" class="dropdown-item">Активировать аккаунт</a>
                             </div>
                         </div>
                         {% endif %}

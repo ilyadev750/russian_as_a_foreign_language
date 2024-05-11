@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block title %}
+Активировать аккаунт
+{% endblock %}
+
+
+{% block content %}
+<div class="about mt-125">
+  <div class="container">
+      <div class="row align-items-center">
+          <div class="col-md-9">
+              <div class="lection-header">
+                <h2>Введите почту для получения ссылки на активацию!</h2>
+                <form method="post">
+                  {% csrf_token %}
+                    {% for field in form %}
+                    <p>
+                      {{ field.label_tag }}<br>
+                      {{ field }}
+                      {% comment %} {% if field.help_text %}
+                        <small style="display: none">{{ field.help_text }}</small>
+                      {% endif %} {% endcomment %}
+                    </p>
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  <button type="submit">Активировать</button>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
