@@ -30,8 +30,15 @@
                         </tbody>
                     </table>
                 </div>
+
+                {% if user.is_superuser %}
                 <div>
-                    <a class="" href="{% url 'get_lection_content' lection_slug=lection.slug %}">Приступить к лекции</a>
+                    <a class="" href="{% url 'add_lection_content' lection_slug=lection.slug %}">Приступить к созданию лекции</a>
+                </div>
+                {% endif %}
+
+                <div>
+                    <a class="" href="{% url 'get_lection_content' lection_slug=lection.slug %}">Приступить к изучению лекции</a>
                 </div>
                 <div>
                     <a class="" href="{% url 'create_new_dictionary' lection_slug=lection.slug %}">Вернуться к редактированию</a>

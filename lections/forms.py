@@ -1,5 +1,6 @@
 from django import forms
 from .models import Lection, Paragraph
+from django.forms import modelformset_factory
 
 
 class CreateLection(forms.ModelForm):
@@ -21,3 +22,10 @@ class AddParagraph(forms.ModelForm):
             "paragraph": 'Абзац',
             "paragraph_number": 'Номер абзаца',
         }
+
+
+AddParagraphFormset = modelformset_factory(
+    model=Paragraph,
+    fields=["paragraph", "paragraph_number"],
+    extra=3
+    )

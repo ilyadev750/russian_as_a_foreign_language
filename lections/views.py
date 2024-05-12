@@ -3,7 +3,7 @@ from django.shortcuts import render
 from .models import Specialization, Lection
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
-from .forms import CreateLection, AddParagraph
+from .forms import CreateLection, AddParagraph, AddParagraphFormset
 from .models import Specialization, Lection, Paragraph
 from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
@@ -31,26 +31,30 @@ def create_new_lection(request):
 
 
 def add_lection_content(request, lection_slug):
-    
-    if request.method == 'POST':
-        form = AddParagraph(request.POST)
 
-        if form.is_valid():
+    if request.method == 'POST':
+        formset = AddParagraphFormset(request.POST)
+
+        if formset.is_valid():
             lection = Lection.objects.get(slug=lection_slug)
-            paragraph = Paragraph()
-            paragraph.lection_id = lection
-            paragraph.paragraph = form.cleaned_data['paragraph']
-            paragraph.paragraph_number = form.cleaned_data['paragraph_number']
-            paragraph.save()
+            for form in formset:
+                try:
+                    paragraph = Paragraph()
+                    paragraph.lection_id = lection
+                    paragraph.paragraph = form.cleaned_data['paragraph']
+                    paragraph.paragraph_number = form.cleaned_data['paragraph_number']
+                    paragraph.save()
+                except KeyError:
+                    break
             return redirect('add_lection_content', lection_slug=lection.slug)
-    
-    form = AddParagraph()
+
+
+    formset = AddParagraphFormset(queryset=Paragraph.objects.none())
     context = {
-        'form': form,
+        'formset': formset,
         'lection_slug': lection_slug,
     }
     return render(request, 'lections/add_paragraph.html', context)
-
 
 def get_profile_lections(request, profile_slug):
 
@@ -86,8 +90,7 @@ def get_lection_content(request, lection_slug):
     return render(request, 'lections/lection_content.html', context)
 
 
-# перейти на создание лекции
-# ввести название лекции и категорию
-# перейти на создание словаря (formset)
-# перейти на создание абзаца с картинками и аудиозаписями (сложная форма)
-# завершть создание лекции или продолжить ее заполнение
+# добавить абзац с картинками и аудиозаписями
+# добавить картинки к абзацу
+# добавить аудиозаписи к абзацу
+# добавить новый абзац

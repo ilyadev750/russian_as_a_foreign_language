@@ -13,7 +13,7 @@ def get_lection_dictionary(request, lection_slug):
     try:
         lection = Lection.objects.get(slug=lection_slug)
     except ObjectDoesNotExist:
-        return HttpResponseNotFound("<h1>Page not found</h1>")
+        return HttpResponseNotFound("<h1>Страница не найдена!</h1>")
     
     values = Dictionary.objects.filter(lection_id=lection)
 
@@ -47,7 +47,7 @@ def create_new_dictionary(request, lection_slug):
                 except KeyError:
                     break
             if "save" in request.POST:
-                return redirect('home')
+                return redirect('add_lection_content', lection_slug=lection_slug)
 
     context = {
         'formset': DictionaryFormset(queryset=Dictionary.objects.none()),
