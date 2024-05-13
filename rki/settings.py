@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     "lections",
     "main",
     "dictionaries",
-    "files",
+    "materials",
 ]
 
 MIDDLEWARE = [

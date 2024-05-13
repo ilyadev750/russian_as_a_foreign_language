@@ -1,18 +1,18 @@
 import re
 from django.shortcuts import render
-from .models import Specialization, Lection
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
-from .forms import CreateLection, AddParagraph, AddParagraphFormset
+from .forms import CreateLectionForm, AddParagraphForm, AddParagraphFormset
 from .models import Specialization, Lection, Paragraph
 from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
+from django.db.models import Q
 
 
 def create_new_lection(request):
 
     if request.method == 'POST':
-        form = CreateLection(request.POST)
+        form = CreateLectionForm(request.POST)
 
         if form.is_valid():
             lection = Lection()
@@ -23,7 +23,7 @@ def create_new_lection(request):
             request.session['slug'] = lection.slug
             return redirect('create_new_dictionary', lection_slug=lection.slug)
         
-    form = CreateLection()
+    form = CreateLectionForm()
     context = {
         'form': form
     }
@@ -48,7 +48,6 @@ def add_lection_content(request, lection_slug):
                     break
             return redirect('add_lection_content', lection_slug=lection.slug)
 
-
     formset = AddParagraphFormset(queryset=Paragraph.objects.none())
     context = {
         'formset': formset,
@@ -56,13 +55,63 @@ def add_lection_content(request, lection_slug):
     }
     return render(request, 'lections/add_paragraph.html', context)
 
+
+def insert_paragraph_in_the_middle(request, lection_slug):
+    if request.method == 'POST':
+        form = AddParagraphForm(request.POST)
+        if form.is_valid():
+            lection = Lection.objects.get(slug=lection_slug)
+            paragraph_number = form.cleaned_data['paragraph_number']
+            lection_paragraphs = Paragraph.objects.filter(
+                Q(lection_id=lection) &
+                Q(paragraph_number__qte=paragraph_number))
+            for paragraph in lection_paragraphs:
+                paragraph.paragraph_number += 1
+                paragraph.save()
+
+            new_paragraph = Paragraph()
+            new_paragraph.lection_id = lection
+            new_paragraph.paragraph = form.cleaned_data['paragraph']
+            new_paragraph.paragraph_number = form.cleaned_data['paragraph_number']
+            new_paragraph.save()
+            return redirect('add_lection_content', lection_slug=lection.slug)
+
+    form = AddParagraphForm()
+    context = {
+        'form': form,
+        'lection_slug': lection_slug,
+    }
+    return render(request, 'lections/add_paragraph_in_middle.html', context)
+
+
+def replace_existing_paragraph(request, lection_slug, paragraph_number):
+    lection = Lection.objects.get(slug=lection_slug)
+    if request.method == 'POST':
+        form = AddParagraphForm(request.POST)
+
+        if form.is_valid():
+            new_paragraph = Paragraph()
+            new_paragraph.lection_id = lection
+            new_paragraph.paragraph = form.cleaned_data['paragraph']
+            new_paragraph.paragraph_number = form.cleaned_data['paragraph_number']
+            new_paragraph.save()
+            return redirect('add_lection_content', lection_slug=lection.slug)
+
+    form = AddParagraphForm(queryset=Paragraph.objects.get(paragraph_number=paragraph_number))
+    context = {
+        'form': form,
+        'lection_slug': lection_slug,
+    }
+    return render(request, 'lections/add_paragraph_in_middle.html', context)
+
+
 def get_profile_lections(request, profile_slug):
 
     try:
         profile_slug = Specialization.objects.get(slug=profile_slug)
     except ObjectDoesNotExist:
         return HttpResponseNotFound("<h1>Page not found</h1>")
-    
+
     lections = Lection.objects.filter(profile_id=profile_slug)
     context = {
         'lections': lections

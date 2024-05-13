@@ -43,33 +43,9 @@ class Paragraph(models.Model):
     class Meta:
         verbose_name = "Контент лекции"
         verbose_name_plural = "Контент лекций"
+        unique_together = ('lection_id', 'paragraph_number')
         
 
     def __str__(self) -> str:
         return f'{self.lection_id} - {self.paragraph_number}'
 
-
-class LectionImage(models.Model):
-    paragraph_id = models.ForeignKey(Paragraph, on_delete=models.CASCADE, verbose_name="Параграф")  
-    image = models.ImageField(upload_to='media/lection_images', verbose_name='Изображение')
-    image_name = models.CharField(max_length=200, verbose_name='Название')
-
-    class Meta:
-        verbose_name = "Изображение"
-        verbose_name_plural = "Изображения"
-
-    def __str__(self) -> str:
-        return f'{self.paragraph_id} - {self.image_name}'
-    
-
-class LectionAudio(models.Model):
-    paragraph_id = models.ForeignKey(Paragraph, on_delete=models.CASCADE, verbose_name="Параграф")  
-    audio = models.FileField(upload_to='media/lection_audio', verbose_name='Аудиозапись')
-    audio_name = models.CharField(max_length=200, verbose_name='Название')
-
-    class Meta:
-        verbose_name = "Аудиозапись"
-        verbose_name_plural = "Аудиозаписи"
-
-    def __str__(self) -> str:
-        return f'{self.paragraph_id} - {self.audio_name}'

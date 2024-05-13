@@ -3,7 +3,7 @@ from .models import Lection, Paragraph
 from django.forms import modelformset_factory
 
 
-class CreateLection(forms.ModelForm):
+class CreateLectionForm(forms.ModelForm):
     class Meta:
         model = Lection
         fields = ["lection_name", "profile_id", "slug"]
@@ -14,7 +14,7 @@ class CreateLection(forms.ModelForm):
         }
 
 
-class AddParagraph(forms.ModelForm):
+class AddParagraphForm(forms.ModelForm):
     class Meta:
         model = Paragraph
         fields = ["paragraph", "paragraph_number"]
