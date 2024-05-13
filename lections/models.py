@@ -49,3 +49,18 @@ class Paragraph(models.Model):
     def __str__(self) -> str:
         return f'{self.lection_id} - {self.paragraph_number}'
 
+
+class AdminLectionAction(models.Model):
+    action_name = models.CharField(
+        max_length=100, unique=True, verbose_name="Действие"
+    )
+    number = models.IntegerField(
+        verbose_name="Номер действия", default=0
+    )
+
+    class Meta:
+        verbose_name = "Действие с лекцией"
+        verbose_name_plural = "Действия с лекциями"
+
+    def __str__(self) -> str:
+        return f'{self.action_name}'

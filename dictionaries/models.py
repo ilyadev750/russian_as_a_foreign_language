@@ -14,3 +14,19 @@ class Dictionary(models.Model):
 
     def __str__(self) -> str:
         return f'{self.termin_in_rus} - {self.termin_in_eng} - {self.lection_id}'
+
+
+class AdminDictionaryAction(models.Model):
+    action_name = models.CharField(
+        max_length=100, unique=True, verbose_name="Действие"
+    )
+    number = models.IntegerField(
+        verbose_name="Номер действия", default=0
+    )
+
+    class Meta:
+        verbose_name = "Действие со словарем"
+        verbose_name_plural = "Действия со словарями"
+
+    def __str__(self) -> str:
+        return f'{self.action_name}'
