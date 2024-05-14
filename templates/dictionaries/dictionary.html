@@ -33,7 +33,7 @@
 
                 {% if user.is_superuser %}
                 <div>
-                    <a class="" href="{% url 'add_lection_content' lection_slug=lection.slug %}">Приступить к созданию лекции</a>
+                    <a class="" href="{% url 'open_lection_editor' lection_slug=lection.slug %}">Приступить к созданию лекции</a>
                 </div>
                 {% endif %}
 

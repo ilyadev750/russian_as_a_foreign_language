@@ -23,6 +23,9 @@ class AdminDictionaryAction(models.Model):
     number = models.IntegerField(
         verbose_name="Номер действия", default=0
     )
+    url = models.CharField(
+        max_length=50, verbose_name="Ссылка", default='#'
+    )
 
     class Meta:
         verbose_name = "Действие со словарем"

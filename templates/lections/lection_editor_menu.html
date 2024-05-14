@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+Меню редактора лекции
+{% endblock %}
+
+{% block content %}
+
+<div class="about mt-125">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-9">
+                {% for key, value in actions.items %}
+                    <p><a href="{{ value }}">{{ key }}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

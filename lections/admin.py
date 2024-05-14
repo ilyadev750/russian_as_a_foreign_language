@@ -17,3 +17,9 @@ class LectionAdmin(admin.ModelAdmin):
 @admin.register(Paragraph)
 class ParagraphAdmin(admin.ModelAdmin):
     list_display = ('lection_id', 'paragraph_number')
+    # list_filter = ['lection_id', 'paragraph_number']
+
+    def get_ordering(self, request):
+        return ['lection_id', 'paragraph_number']
+
+        

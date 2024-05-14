@@ -6,7 +6,7 @@ class Specialization(models.Model):
         max_length=100, unique=True, verbose_name="Профиль"
     )
     slug = models.SlugField(max_length=50, verbose_name="URL", default='slug')
-    
+
     class Meta:
         verbose_name = "Профиль"
         verbose_name_plural = "Профили"
@@ -43,8 +43,6 @@ class Paragraph(models.Model):
     class Meta:
         verbose_name = "Контент лекции"
         verbose_name_plural = "Контент лекций"
-        unique_together = ('lection_id', 'paragraph_number')
-        
 
     def __str__(self) -> str:
         return f'{self.lection_id} - {self.paragraph_number}'
@@ -56,6 +54,9 @@ class AdminLectionAction(models.Model):
     )
     number = models.IntegerField(
         verbose_name="Номер действия", default=0
+    )
+    url = models.CharField(
+        max_length=50, verbose_name="Ссылка", default='#'
     )
 
     class Meta:

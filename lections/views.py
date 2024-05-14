@@ -1,9 +1,10 @@
 import re
+from django.urls import reverse
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound
 from .forms import CreateLectionForm, AddParagraphForm, AddParagraphFormset
-from .models import Specialization, Lection, Paragraph
+from .models import Specialization, Lection, Paragraph, AdminLectionAction
 from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
 from django.db.models import Q
@@ -30,11 +31,22 @@ def create_new_lection(request):
     return render(request, 'lections/create_new_lection.html', context)
 
 
+def lection_editor_menu(request, lection_slug):
+    actions = AdminLectionAction.objects.all()
+    action_urls = {}
+    for action in actions:
+        action_urls[action.action_name] = reverse(action.url, args=[lection_slug])
+    context = {
+        'actions': action_urls
+    }
+    return render(request, 'lections/lection_editor_menu.html', context=context)
+
+
 def add_lection_content(request, lection_slug):
 
     if request.method == 'POST':
         formset = AddParagraphFormset(request.POST)
-
+        # добавить проверку на существование абзацев
         if formset.is_valid():
             lection = Lection.objects.get(slug=lection_slug)
             for form in formset:
@@ -64,7 +76,7 @@ def insert_paragraph_in_the_middle(request, lection_slug):
             paragraph_number = form.cleaned_data['paragraph_number']
             lection_paragraphs = Paragraph.objects.filter(
                 Q(lection_id=lection) &
-                Q(paragraph_number__qte=paragraph_number))
+                Q(paragraph_number__gte=paragraph_number))
             for paragraph in lection_paragraphs:
                 paragraph.paragraph_number += 1
                 paragraph.save()
@@ -74,7 +86,7 @@ def insert_paragraph_in_the_middle(request, lection_slug):
             new_paragraph.paragraph = form.cleaned_data['paragraph']
             new_paragraph.paragraph_number = form.cleaned_data['paragraph_number']
             new_paragraph.save()
-            return redirect('add_lection_content', lection_slug=lection.slug)
+            return redirect('open_lection_editor', lection_slug=lection.slug)
 
     form = AddParagraphForm()
     context = {
@@ -84,7 +96,7 @@ def insert_paragraph_in_the_middle(request, lection_slug):
     return render(request, 'lections/add_paragraph_in_middle.html', context)
 
 
-def replace_existing_paragraph(request, lection_slug, paragraph_number):
+def replace_content(request, lection_slug, paragraph_number):
     lection = Lection.objects.get(slug=lection_slug)
     if request.method == 'POST':
         form = AddParagraphForm(request.POST)
@@ -137,6 +149,14 @@ def get_lection_content(request, lection_slug):
     }
 
     return render(request, 'lections/lection_content.html', context)
+
+
+def delete_paragraph(request):
+    pass
+
+
+def delete_lection(request):
+    pass
 
 
 # добавить абзац с картинками и аудиозаписями
