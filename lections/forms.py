@@ -24,6 +24,15 @@ class AddParagraphForm(forms.ModelForm):
         }
 
 
+class ChangeParagraphForm(forms.ModelForm):
+    class Meta:
+        model = Paragraph
+        fields = ["paragraph"]
+        labels = {
+            "paragraph": 'Абзац',
+        }
+
+
 AddParagraphFormset = modelformset_factory(
     model=Paragraph,
     fields=["paragraph", "paragraph_number"],

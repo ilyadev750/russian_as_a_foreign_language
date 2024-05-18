@@ -8,6 +8,9 @@ admin.site.register(Specialization)
 class LectionAction(admin.ModelAdmin):
     list_display = ('action_name', 'number')
 
+    def get_ordering(self, request):
+        return ['number']
+
 
 @admin.register(Lection)
 class LectionAdmin(admin.ModelAdmin):
@@ -17,7 +20,6 @@ class LectionAdmin(admin.ModelAdmin):
 @admin.register(Paragraph)
 class ParagraphAdmin(admin.ModelAdmin):
     list_display = ('lection_id', 'paragraph_number')
-    # list_filter = ['lection_id', 'paragraph_number']
 
     def get_ordering(self, request):
         return ['lection_id', 'paragraph_number']
