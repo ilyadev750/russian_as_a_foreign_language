@@ -11,7 +11,7 @@ class Image(models.Model):
         verbose_name_plural = "Изображения"
 
     def __str__(self) -> str:
-        return f'{self.image.name}'
+        return f'{self.image_name}'
 
 
 class Audio(models.Model):
@@ -23,7 +23,7 @@ class Audio(models.Model):
         verbose_name_plural = "Аудиозаписи"
 
     def __str__(self) -> str:
-        return f'{self.audio.name}'
+        return f'{self.audio_name}'
 
 
 class LectionImage(models.Model):
@@ -35,8 +35,8 @@ class LectionImage(models.Model):
         verbose_name_plural = "Изображения"
 
     def __str__(self) -> str:
-        return f'{self.paragraph_id} - {self.image_name}'
-    
+        return f'{self.paragraph_id} - {self.image_id}'
+
 
 class LectionAudio(models.Model):
     paragraph_id = models.ForeignKey(Paragraph, on_delete=models.CASCADE, verbose_name="Параграф")  
@@ -47,4 +47,4 @@ class LectionAudio(models.Model):
         verbose_name_plural = "Аудиозаписи"
 
     def __str__(self) -> str:
-        return f'{self.paragraph_id} - {self.audio_name}'
+        return f'{self.paragraph_id} - {self.audio_id}'

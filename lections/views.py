@@ -138,7 +138,7 @@ def replace_content(request, lection_slug):
     lection = Lection.objects.get(slug=lection_slug)
     if request.method == 'POST':
         form = ChangeParagraphForm(request.POST)
-
+        
         if form.is_valid():
             changed_paragraph = Paragraph.objects.get(lection_id=lection, paragraph_number=paragraph_number)
             changed_paragraph.lection_id = lection
