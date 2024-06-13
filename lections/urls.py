@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from materials.views import (add_image,
+from materials.views import (add_image_to_paragraph,
                              add_audio,
                              delete_image,
                              delete_audio)
@@ -28,7 +28,7 @@ urlpatterns = [
     path('<slug:lection_slug>/add/', add_lection_content, name='add_lection_content'),
     path('<slug:lection_slug>/insert/', insert_paragraph_in_the_middle, name='insert_paragraph_in_the_middle'),
     path('<slug:lection_slug>/replace/', replace_content, name='replace_content'),
-    path('<slug:lection_slug>/add_image/', add_image, name='add_image'),          
+    path('<slug:lection_slug>/add_image/', add_image_to_paragraph, name='add_image'),          
     path('<slug:lection_slug>/add_audio/', add_audio, name='add_audio'),    
     path('<slug:lection_slug>/delete_image/', delete_image, name='delete_image'),  
     path('<slug:lection_slug>/delete_audio/', delete_audio, name='delete_audio'),

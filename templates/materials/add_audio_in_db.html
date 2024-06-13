@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Добавить абзац
+Загрузить аудиозаписи в базу данных
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
         <div class="row align-items-center">
             <div class="col-md-9">
                 <div class="lection-header">
-                    <p>Номер последнего абзаца: {{ last_paragraph }}</p>
+                    <p>Загрузить аудиозаписи в базу данных: </p>
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %} 
                         {{ formset.management_form }} 
@@ -23,7 +23,7 @@
                             {% endfor %}
                         {% endfor %}
                         <div>
-                            <button class="save-button" type="submit" name="save">Добавить абзац</button>
+                            <button class="save-button" type="submit" name="save">Добавить аудиозаписи</button>
                         </div>
                     </form>
                     <div>

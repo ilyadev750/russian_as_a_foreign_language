@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Добавить абзац
+Загрузить изображение в лекцию
 {% endblock %}
 
 {% block content %}
@@ -12,18 +12,15 @@
         <div class="row align-items-center">
             <div class="col-md-9">
                 <div class="lection-header">
-                    <p>Номер последнего абзаца: {{ last_paragraph }}</p>
+                    <p>Загрузить изображение в лекцию: </p>
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %} 
-                        {{ formset.management_form }} 
-                        {% for form in formset %}
-                            {% for field in form %}
-                                <p>{{ field.label_tag }}</p>
-                                <p>{{ field }}</p>
-                            {% endfor %}
+                        {% for field in form %}
+                            <p>{{ field.label_tag }}</p>
+                            <p>{{ field }}</p>
                         {% endfor %}
                         <div>
-                            <button class="save-button" type="submit" name="save">Добавить абзац</button>
+                            <button class="save-button" type="submit" name="save">Добавить изображение</button>
                         </div>
                     </form>
                     <div>

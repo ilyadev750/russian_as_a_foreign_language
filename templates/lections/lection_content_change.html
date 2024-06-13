@@ -14,6 +14,7 @@
                 {% for paragraph in paragraphs %}
                     <p>{{ paragraph.paragraph }}</p>
                     <p><a href="{{ replace_url }}?paragraph_number={{ paragraph.paragraph_number }}">{{ paragraph.paragraph_number }} абзац изменить </a></p>
+                    <p><a href="{{ image_url }}?paragraph_number={{ paragraph.paragraph_number }}"> добавить изображение </a></p>
                 {% endfor %}
             </div>
         </div>

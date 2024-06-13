@@ -3,7 +3,7 @@ from lections.models import Paragraph
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='media/lection_images', verbose_name='Изображение')
+    image = models.ImageField(upload_to='lection_images', verbose_name='Изображение')
     image_name = models.CharField(max_length=200, verbose_name='Название')
 
     class Meta:
@@ -15,7 +15,7 @@ class Image(models.Model):
 
 
 class Audio(models.Model):
-    audio = models.FileField(upload_to='media/lection_audio', verbose_name='Аудиозапись')
+    audio = models.FileField(upload_to='lection_audio', verbose_name='Аудиозапись')
     audio_name = models.CharField(max_length=200, verbose_name='Название')
 
     class Meta:

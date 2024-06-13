@@ -9,4 +9,5 @@ urlpatterns = [
     path("", include('main.urls')),
     path("lections/", include('lections.urls')),
     path("", include('dictionaries.urls')),
+    path("materials/", include('materials.urls')),
 ]

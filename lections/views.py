@@ -1,7 +1,8 @@
 import re
-from django.urls import reverse
+from django.urls import reverse, NoReverseMatch
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
 from django.http import HttpResponseNotFound
 from .utils import get_lection_content as get_content
 from .forms import CreateLectionForm, AddParagraphForm, AddParagraphFormset, ChangeParagraphForm
@@ -43,9 +44,6 @@ def get_all_exist_lections(request):
             lection_info['obj'] = lection
             lection_info['edit_url'] = reverse('open_lection_editor', args=[lection.slug])
             all_lections[profile.specialization_name].append(lection_info)
-    #     all_lections[profile.specialization_name] = list(profile_lections)
-    #     for lection in profile_lections:
-    #         lection_editor_urls[lection.slug] = reverse('open_lection_editor', args=[lection.slug])
     context = {
         'specializations': specializations,
         'all_lections': all_lections,
@@ -58,7 +56,17 @@ def lection_editor_menu(request, lection_slug):
     actions = AdminLectionAction.objects.all().order_by('number')
     action_urls = {}
     for action in actions:
-        action_urls[action.action_name] = reverse(action.url, args=[lection_slug])
+
+        try:
+            action_urls[action.action_name] = reverse(action.url, args=[lection_slug])
+        except NoReverseMatch:
+            print('Try to reverse without args!')
+
+        # try:
+        #     action_urls[action.action_name] = reverse(action.url)
+        # except NoReverseMatch:
+        #     print('URL does not exists!')
+
     context = {
         'actions': action_urls
     }
@@ -81,11 +89,19 @@ def add_lection_content(request, lection_slug):
                 except KeyError:
                     break
             return redirect('add_lection_content', lection_slug=lection.slug)
+        
+    lection = Lection.objects.get(slug=lection_slug)
+    exist_lection_content = Paragraph.objects.filter(lection_id=lection).order_by('-paragraph_number')
+    if list(exist_lection_content):
+        number_of_last_paragraph = exist_lection_content[0].paragraph_number
+    else:
+        number_of_last_paragraph = 0
 
     formset = AddParagraphFormset(queryset=Paragraph.objects.none())
     context = {
         'formset': formset,
         'lection_slug': lection_slug,
+        'last_paragraph': number_of_last_paragraph
     }
     return render(request, 'lections/add_paragraph.html', context)
 
@@ -147,9 +163,11 @@ def get_lection_content_for_changing(request, lection_slug):
 
     paragraphs = get_content(lection_slug=lection_slug)
     replace_url = reverse('replace_content', args=[lection_slug])
+    image_url = reverse('add_image_to_paragraph', args=[lection_slug])
     context = {
         'replace_url': replace_url,
-        'paragraphs': paragraphs
+        'paragraphs': paragraphs,
+        'image_url': image_url
     }
 
     return render(request, 'lections/lection_content_change.html', context)
