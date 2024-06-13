@@ -25,8 +25,6 @@ def add_image(request, lection_slug):
                 image_paragraph.image_id = new_image
                 image_paragraph.save()
 
-                
-
 
 def add_audio(request):
     pass

@@ -32,6 +32,28 @@ def create_new_lection(request):
     return render(request, 'lections/create_new_lection.html', context)
 
 
+def get_all_exist_lections(request):
+    all_lections = {}
+    specializations = list(Specialization.objects.all())
+    for profile in specializations:
+        profile_lections = Lection.objects.filter(profile_id=profile)
+        all_lections[profile.specialization_name] = []
+        for lection in profile_lections:
+            lection_info = {}
+            lection_info['obj'] = lection
+            lection_info['edit_url'] = reverse('open_lection_editor', args=[lection.slug])
+            all_lections[profile.specialization_name].append(lection_info)
+    #     all_lections[profile.specialization_name] = list(profile_lections)
+    #     for lection in profile_lections:
+    #         lection_editor_urls[lection.slug] = reverse('open_lection_editor', args=[lection.slug])
+    context = {
+        'specializations': specializations,
+        'all_lections': all_lections,
+    }
+    print(all_lections)
+    return render(request, 'lections/get_all_lections.html', context)
+
+
 def lection_editor_menu(request, lection_slug):
     actions = AdminLectionAction.objects.all().order_by('number')
     action_urls = {}

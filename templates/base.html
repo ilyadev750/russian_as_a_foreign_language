@@ -80,7 +80,7 @@
                             <div class="dropdown-menu">
                                 {% comment %} {% for profile in profiles %} {% endcomment %}
                                 <a href="{% url 'create_new_lection' %}" class="dropdown-item">Создать лекцию</a>
-                                <a href="#" class="dropdown-item">Редактировать лекцию</a>
+                                <a href="{% url 'get_all_exist_lections' %}" class="dropdown-item">Редактировать лекцию</a>
                                 {% comment %} {% endfor %}     {% endcomment %}
                             </div>
                         </div>

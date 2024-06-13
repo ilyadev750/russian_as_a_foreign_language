@@ -5,6 +5,7 @@ from materials.views import (add_image,
                              delete_image,
                              delete_audio)
 from .views import (get_profile_lections,
+                    get_all_exist_lections,
                     add_lection_content,
                     create_new_lection,
                     lection_editor_menu,
@@ -18,6 +19,7 @@ from .views import (get_profile_lections,
 
 urlpatterns = [
     path('create-new-lection/', create_new_lection, name='create_new_lection'),
+    path('get-all-lections/', get_all_exist_lections, name='get_all_exist_lections'),
     path('<slug:profile_slug>/', get_profile_lections, name='get_profile_lections'),
     path('<slug:lection_slug>/content/', get_lection_content, name='get_lection_content'),
     path('<slug:lection_slug>/content-change/', get_lection_content_for_changing, name='get_lection_content_for_changing'),

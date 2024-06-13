@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+Выберите лекцию для изменения
+{% endblock %}
+
+{% block content %}
+
+<div class="about mt-125">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-9">
+                <div class="lection-header">
+                    <h3>Выберите лекцию для изменения</h3>
+                </div>
+                <div class="lections-list">
+                    {% for profile, lections in all_lections.items %}
+                        <p><a class="" href="#">{{ profile }}</a></p>
+                        {% for lection in lections %}
+                            <p><a class="" href="{{ lection.edit_url }}">{{ lection.obj }}</a></p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
