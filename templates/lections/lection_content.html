@@ -11,8 +11,11 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-9">
-                {% for paragraph in paragraphs %}
-                    <p>{{ paragraph.paragraph }}</p>
+                {% for key, value in paragraphs.items %}
+                    <p>{{ value }}</p>
+                    <p><img src="{{ images.1.image_id.image.url }}" width="300px"></p>
+                    {% comment %} <p>{{ images.key }}</p> {% endcomment %}
+                    {% comment %} <p>{{ paragraph.paragraph_id.image}}</p> {% endcomment %}
                 {% endfor %}
             </div>
         </div>

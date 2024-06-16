@@ -13,23 +13,22 @@ class AddImageForm(forms.ModelForm):
         }
 
 
-class ImageForm(forms.ModelForm):
+class LectionImageForm(forms.ModelForm):
     class Meta:
         model = LectionImage
-        fields = ["paragraph_id", "image_id"]
+        fields = ["image_id"]
         labels = {
-            "paragraph_id": "Параграф",
-            "image_id": 'Изображение'
+            "image_id": "Изображение"
         }
 
 
-AddImageFormset = modelformset_factory(
+AddImageFormsetDb = modelformset_factory(
     model=Image,
     fields=["image", "image_name"],
     extra=3
     )
 
-AddAudioFormset = modelformset_factory(
+AddAudioFormsetDb = modelformset_factory(
     model=Audio,
     fields=["audio", "audio_name"],
     extra=3

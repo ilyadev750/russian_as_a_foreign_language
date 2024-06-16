@@ -47,8 +47,9 @@ def get_all_exist_lections(request):
     context = {
         'specializations': specializations,
         'all_lections': all_lections,
+        'dict': {1:1, 2:222222}
     }
-    print(all_lections)
+
     return render(request, 'lections/get_all_lections.html', context)
 
 
@@ -151,10 +152,19 @@ def get_profile_lections(request, profile_slug):
 
 def get_lection_content(request, lection_slug):
 
-    paragraphs = get_content(lection_slug=lection_slug)
+    # paragraphs = get_content(lection_slug=lection_slug)
+    # context = {
+    #     'paragraphs': paragraphs
+    # }
+
+    result = get_content(lection_slug=lection_slug)
+    paragraphs = result[0]
+    images = result[1]
     context = {
-        'paragraphs': paragraphs
+        'paragraphs': paragraphs,
+        'images': images
     }
+    print(images)
 
     return render(request, 'lections/lection_content.html', context)
 

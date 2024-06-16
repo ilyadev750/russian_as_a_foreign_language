@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
-from .forms import AddImageForm, ImageForm, AddImageFormset, AddAudioFormset
-from .models import Image, LectionImage, Audio
+from .forms import AddImageForm, LectionImageForm, AddImageFormsetDb, AddAudioFormsetDb
+from .models import Image, LectionImage, Audio, LectionAudio
 from lections.models import Paragraph, Lection
 
 
 def load_images_to_db(request, lection_slug):
 
     if request.method == 'POST':
-        formset = AddImageFormset(request.POST, request.FILES)
+        formset = AddImageFormsetDb(request.POST, request.FILES)
         if formset.is_valid():
             for form in formset:
                 try:
@@ -20,7 +20,7 @@ def load_images_to_db(request, lection_slug):
 
             return redirect('load_images_to_db', lection_slug)
     
-    formset = AddImageFormset(queryset=Image.objects.none())
+    formset = AddImageFormsetDb(queryset=Image.objects.none())
     context = {
         'formset': formset,
         'lection_slug': lection_slug,
@@ -32,7 +32,7 @@ def load_images_to_db(request, lection_slug):
 def load_audio_to_db(request, lection_slug):
 
     if request.method == 'POST':
-        formset = AddAudioFormset(request.POST, request.FILES)
+        formset = AddAudioFormsetDb(request.POST, request.FILES)
         if formset.is_valid():
             for form in formset:
                 try:
@@ -45,7 +45,7 @@ def load_audio_to_db(request, lection_slug):
 
             return redirect('load_audio_to_db', lection_slug)
     
-    formset = AddAudioFormset(queryset=Audio.objects.none())
+    formset = AddAudioFormsetDb(queryset=Audio.objects.none())
     context = {
         'formset': formset,
         'lection_slug': lection_slug,
@@ -57,13 +57,19 @@ def load_audio_to_db(request, lection_slug):
 def add_image_to_paragraph(request, lection_slug):
     paragraph_number = int(request.GET.get('paragraph_number'))
     lection = Lection.objects.get(slug=lection_slug)
-    paragraph = Paragraph.objects.get(lection_id=lection, paragraph_number=paragraph_number)
+    # paragraph = Paragraph.objects.get(lection_id=lection, paragraph_number=paragraph_number)
 
     if request.method == 'POST':
-        pass
+        form = LectionImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            paragraph_image = LectionImage()
+            paragraph_image.lection_id = lection
+            paragraph_image.image_id = form.cleaned_data['image_id']
+            paragraph_image.position = paragraph_number
+            paragraph_image.save()
+            return redirect('open_lection_editor', lection_slug)
 
-    form = ImageForm()
-    form.fields["paragraph_id"].queryset = Paragraph.objects.filter(lection_id=lection, paragraph_number=paragraph_number)
+    form = LectionImageForm()
 
     context = {
         'form': form,
@@ -71,20 +77,6 @@ def add_image_to_paragraph(request, lection_slug):
     }
 
     return render(request, 'materials/add_image_in_lection.html', context)
-        # if 'add_image' in request.POST:
-        #     form = AddImageForm(request.POST)
-
-        #     if form.is_valid():
-
-        #         new_image = Image()
-        #         new_image.image = form.cleaned_data['image']
-        #         new_image.image_name = form.cleaned_data['image_name']
-        #         new_image.save()
-
-        #         image_paragraph = LectionImage()
-        #         image_paragraph.paragraph_id = paragraph
-        #         image_paragraph.image_id = new_image
-        #         image_paragraph.save()
 
 
 def add_audio(request):

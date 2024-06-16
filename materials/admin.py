@@ -4,5 +4,5 @@ from .models import LectionAudio, LectionImage, Audio, Image
 
 admin.site.register(Audio)
 admin.site.register(Image)
-# admin.site.register(LectionImage)
-# admin.site.register(LectionAudio)
+admin.site.register(LectionImage)
+admin.site.register(LectionAudio)
