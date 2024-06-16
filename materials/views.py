@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import AddImageForm, LectionImageForm, AddImageFormsetDb, AddAudioFormsetDb
+from .forms import LectionAudioForm, LectionImageForm, AddImageFormsetDb, AddAudioFormsetDb
 from .models import Image, LectionImage, Audio, LectionAudio
 from lections.models import Paragraph, Lection
 
@@ -57,7 +57,6 @@ def load_audio_to_db(request, lection_slug):
 def add_image_to_paragraph(request, lection_slug):
     paragraph_number = int(request.GET.get('paragraph_number'))
     lection = Lection.objects.get(slug=lection_slug)
-    # paragraph = Paragraph.objects.get(lection_id=lection, paragraph_number=paragraph_number)
 
     if request.method == 'POST':
         form = LectionImageForm(request.POST, request.FILES)
@@ -67,7 +66,7 @@ def add_image_to_paragraph(request, lection_slug):
             paragraph_image.image_id = form.cleaned_data['image_id']
             paragraph_image.position = paragraph_number
             paragraph_image.save()
-            return redirect('open_lection_editor', lection_slug)
+            return redirect('get_lection_content_for_changing', lection_slug=lection.slug)
 
     form = LectionImageForm()
 
@@ -78,6 +77,29 @@ def add_image_to_paragraph(request, lection_slug):
 
     return render(request, 'materials/add_image_in_lection.html', context)
 
+
+def add_audio_to_paragraph(request, lection_slug):
+    paragraph_number = int(request.GET.get('paragraph_number'))
+    lection = Lection.objects.get(slug=lection_slug)
+
+    if request.method == 'POST':
+        form = LectionAudioForm(request.POST, request.FILES)
+        if form.is_valid():
+            paragraph_audio = LectionAudio()
+            paragraph_audio.lection_id = lection
+            paragraph_audio.audio_id = form.cleaned_data['audio_id']
+            paragraph_audio.position = paragraph_number
+            paragraph_audio.save()
+            return redirect('get_lection_content_for_changing', lection_slug=lection.slug)
+
+    form = LectionAudioForm()
+
+    context = {
+        'form': form,
+        'lection_slug': lection_slug,
+    }
+
+    return render(request, 'materials/add_audio_in_lection.html', context)
 
 def add_audio(request):
     pass

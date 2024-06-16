@@ -11,9 +11,24 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-9">
-                {% for key, value in paragraphs.items %}
+                {% for key, value in content.items %}
+                    <p>{{ value.paragraph.paragraph }}</p>
+                    {% for image in value.images %}
+                        <p><img src="{{ image.image_id.image.url }}" width="300px"></p>
+                        <p>{{ image.image_id.image_name }}</p>
+                    {% endfor %}
+
+                    {% for track in value.audio %}
+                        <audio controls>
+                            <source src="{{ track.audio_id.audio.url }}" type="audio/wav">
+                        </audio>
+                        <p>{{ track.audio_id.audio_name }}</p>
+                    {% endfor %}
+
+                {% comment %} {% for key, value in paragraphs.items %}
                     <p>{{ value }}</p>
-                    <p><img src="{{ images.1.image_id.image.url }}" width="300px"></p>
+                    {}
+                    <p><img src="{{ images.1.image_id.image.url }}" width="300px"></p> {% endcomment %}
                     {% comment %} <p>{{ images.key }}</p> {% endcomment %}
                     {% comment %} <p>{{ paragraph.paragraph_id.image}}</p> {% endcomment %}
                 {% endfor %}
@@ -21,5 +36,6 @@
         </div>
     </div>
 </div>
+<p><a class="" href="{% url 'open_lection_editor' lection_slug=lection_slug %}">Вернуться в меню редактора</a></p>
 
 {% endblock %}

@@ -47,7 +47,6 @@ def get_all_exist_lections(request):
     context = {
         'specializations': specializations,
         'all_lections': all_lections,
-        'dict': {1:1, 2:222222}
     }
 
     return render(request, 'lections/get_all_lections.html', context)
@@ -125,7 +124,7 @@ def insert_paragraph_in_the_middle(request, lection_slug):
             new_paragraph.paragraph = form.cleaned_data['paragraph']
             new_paragraph.paragraph_number = form.cleaned_data['paragraph_number']
             new_paragraph.save()
-            return redirect('open_lection_editor', lection_slug=lection.slug)
+            return redirect('get_lection_content_for_changing', lection_slug=lection.slug)
 
     form = AddParagraphForm()
     context = {
@@ -152,32 +151,28 @@ def get_profile_lections(request, profile_slug):
 
 def get_lection_content(request, lection_slug):
 
-    # paragraphs = get_content(lection_slug=lection_slug)
-    # context = {
-    #     'paragraphs': paragraphs
-    # }
-
     result = get_content(lection_slug=lection_slug)
-    paragraphs = result[0]
-    images = result[1]
     context = {
-        'paragraphs': paragraphs,
-        'images': images
+        'content': result,
+        'lection_slug': lection_slug,
     }
-    print(images)
 
     return render(request, 'lections/lection_content.html', context)
 
 
 def get_lection_content_for_changing(request, lection_slug):
 
-    paragraphs = get_content(lection_slug=lection_slug)
+    content = get_content(lection_slug=lection_slug)
     replace_url = reverse('replace_content', args=[lection_slug])
     image_url = reverse('add_image_to_paragraph', args=[lection_slug])
+    audio_url = reverse('add_audio_to_paragraph', args=[lection_slug])
+
     context = {
         'replace_url': replace_url,
-        'paragraphs': paragraphs,
-        'image_url': image_url
+        'content': content,
+        'image_url': image_url,
+        'audio_url': audio_url,
+        'lection_slug': lection_slug,
     }
 
     return render(request, 'lections/lection_content_change.html', context)

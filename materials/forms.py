@@ -22,6 +22,15 @@ class LectionImageForm(forms.ModelForm):
         }
 
 
+class LectionAudioForm(forms.ModelForm):
+    class Meta:
+        model = LectionAudio
+        fields = ["audio_id"]
+        labels = {
+            "image_id": "Аудиозапись"
+        }
+
+
 AddImageFormsetDb = modelformset_factory(
     model=Image,
     fields=["image", "image_name"],
