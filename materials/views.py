@@ -101,6 +101,33 @@ def add_audio_to_paragraph(request, lection_slug):
 
     return render(request, 'materials/add_audio_in_lection.html', context)
 
+
+def delete_image_from_paragraph(request, lection_slug):
+    paragraph_number = int(request.GET.get('paragraph_number'))
+    image_id = int(request.GET.get('image_id'))
+    lection = Lection.objects.get(slug=lection_slug)
+
+    image = LectionImage.objects.get(lection_id=lection,
+                                     position=paragraph_number,
+                                     image_id=image_id)
+    image.delete()
+
+    return redirect('get_lection_content_for_deleting', lection_slug=lection.slug)
+
+
+def delete_audio_from_pararaph(request, lection_slug):
+    paragraph_number = int(request.GET.get('paragraph_number'))
+    audio_id = int(request.GET.get('audio_id'))
+    lection = Lection.objects.get(slug=lection_slug)
+
+    audio = LectionAudio.objects.get(lection_id=lection,
+                                     position=paragraph_number,
+                                     audio_id=audio_id)
+    audio.delete()
+
+    return redirect('get_lection_content_for_deleting', lection_slug=lection.slug)
+
+
 def add_audio(request):
     pass
 

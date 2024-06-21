@@ -7,6 +7,7 @@ from django.http import HttpResponseNotFound
 from .utils import get_lection_content as get_content
 from .forms import CreateLectionForm, AddParagraphForm, AddParagraphFormset, ChangeParagraphForm
 from .models import Specialization, Lection, Paragraph, AdminLectionAction
+from materials.models import LectionAudio, LectionImage
 from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
 from django.db.models import Q
@@ -61,11 +62,6 @@ def lection_editor_menu(request, lection_slug):
             action_urls[action.action_name] = reverse(action.url, args=[lection_slug])
         except NoReverseMatch:
             print('Try to reverse without args!')
-
-        # try:
-        #     action_urls[action.action_name] = reverse(action.url)
-        # except NoReverseMatch:
-        #     print('URL does not exists!')
 
     context = {
         'actions': action_urls
@@ -178,6 +174,24 @@ def get_lection_content_for_changing(request, lection_slug):
     return render(request, 'lections/lection_content_change.html', context)
 
 
+def get_lection_content_for_deleting(request, lection_slug):
+
+    content = get_content(lection_slug=lection_slug)
+    delete_image_url = reverse('delete_image_from_paragraph', args=[lection_slug])
+    delete_audio_url = reverse('delete_audio_from_paragraph', args=[lection_slug])
+    delete_paragraph_url = reverse('delete_paragraph_from_lection', args=[lection_slug])
+
+    context = {
+        'content': content,
+        'delete_image_url': delete_image_url,
+        'delete_audio_url': delete_audio_url,
+        'delete_paragraph_url': delete_paragraph_url,
+        'lection_slug': lection_slug,
+    }
+
+    return render(request, 'lections/lection_content_delete.html', context)
+
+
 def replace_content(request, lection_slug):
     paragraph_number = int(request.GET.get('paragraph_number'))
     lection = Lection.objects.get(slug=lection_slug)
@@ -199,11 +213,36 @@ def replace_content(request, lection_slug):
     return render(request, 'lections/replace_paragraph.html', context)
 
 
-def get_lection_content_for_deleting(request, lection_slug):
-    pass
+def delete_paragraph_from_lection(request, lection_slug):
+    paragraph_number = int(request.GET.get('paragraph_number'))
+    lection = Lection.objects.get(slug=lection_slug)
+    paragraph = Paragraph.objects.get(lection_id=lection, paragraph_number=paragraph_number)
+    paragraph.delete()
 
-def delete_paragraph(request):
-    pass
+    lection_paragraphs = Paragraph.objects.filter(
+                Q(lection_id=lection) &
+                Q(paragraph_number__gte=paragraph_number))
+    for paragraph in lection_paragraphs:
+        paragraph.paragraph_number -= 1
+        paragraph.save()
+
+    lection_images = LectionImage.objects.filter(
+                Q(lection_id=lection) &
+                Q(position__gte=paragraph_number))
+    for image in lection_images:
+        image.position -= 1
+        image.save()
+
+    lection_audio = LectionAudio.objects.filter(
+                Q(lection_id=lection) &
+                Q(position__gte=paragraph_number))
+    
+    for audio in lection_audio:
+        audio.position -= 1
+        audio.save()
+
+    return redirect('get_lection_content_for_deleting', lection_slug=lection.slug)
+
 
 def delete_lection(request):
     pass

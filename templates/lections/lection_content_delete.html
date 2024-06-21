@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+Изменить контент лекции
+{% endblock %}
+
+{% block content %}
+
+<div class="about mt-125">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-9">
+                {% for key, value in content.items %}
+                    <p>{{ value.paragraph.paragraph }}</p>
+
+                    {% for image in value.images %}
+                        <p><img src="{{ image.image_id.image.url }}" width="300px"></p>
+                        <p>{{ image.image_id.image_name }}</p>
+                        <p><a href="{{ delete_image_url }}?paragraph_number={{ value.paragraph.paragraph_number }}&image_id={{ image.image_id.pk  }}"> Удалить изображение </a></p>
+                    {% endfor %}
+
+                    {% for track in value.audio %}
+                        <audio controls>
+                            <source src="{{ track.audio_id.audio.url }}" type="audio/wav">
+                        </audio>
+                        <p>{{ track.audio_id.audio_name }}</p>
+                        <p><a href="{{ delete_audio_url }}?paragraph_number={{ value.paragraph.paragraph_number }}&audio_id={{ track.audio_id.pk }}"> Удалить аудиозапись </a></p>
+                    {% endfor %}
+
+                    <p><a href="{{ delete_paragraph_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"> Удалить абзац {{ value.paragraph.paragraph_number }}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<p><a class="" href="{% url 'open_lection_editor' lection_slug=lection_slug %}">Вернуться в меню редактора</a></p>
+
+{% endblock %}
+

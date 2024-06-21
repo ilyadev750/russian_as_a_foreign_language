@@ -15,7 +15,7 @@ from .views import (get_profile_lections,
                     insert_paragraph_in_the_middle,
                     replace_content,
                     delete_lection,
-                    delete_paragraph)
+                    delete_paragraph_from_lection)
 
 urlpatterns = [
     path('create-new-lection/', create_new_lection, name='create_new_lection'),
@@ -32,6 +32,6 @@ urlpatterns = [
     path('<slug:lection_slug>/add_audio/', add_audio, name='add_audio'),    
     path('<slug:lection_slug>/delete_image/', delete_image, name='delete_image'),  
     path('<slug:lection_slug>/delete_audio/', delete_audio, name='delete_audio'),
-    path('<slug:lection_slug>/delete_paragraph/', delete_paragraph, name='delete_paragraph'),
+    path('<slug:lection_slug>/delete_paragraph/', delete_paragraph_from_lection, name='delete_paragraph_from_lection'),
     path('<slug:lection_slug>/delete_lection/', delete_lection, name='delete_lection'), 
 ]
