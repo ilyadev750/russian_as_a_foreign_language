@@ -58,6 +58,7 @@ def create_new_dictionary(request, lection_slug):
 
 def delete_dictionary_item(request, lection_slug, pk):
     if request.user.is_superuser:
-        dictionary = Dictionary.objects.get(pk=pk)
+        termin_id = int(request.GET.get('termin_id'))
+        dictionary = Dictionary.objects.get(pk=termin_id)
         dictionary.delete()
         return redirect('get_lection_dictionary', lection_slug)

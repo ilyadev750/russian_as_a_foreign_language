@@ -12,7 +12,9 @@
         <div class="row align-items-center">
             <div class="col-md-9">
                 {% for key, value in content.items %}
+                    <p>Абзац {{ value.paragraph.paragraph_number }}</p>
                     <p>{{ value.paragraph.paragraph }}</p>
+                    <p><a href="{{ delete_paragraph_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"> Удалить абзац {{ value.paragraph.paragraph_number }}</a></p>
 
                     {% for image in value.images %}
                         <p><img src="{{ image.image_id.image.url }}" width="300px"></p>
@@ -28,7 +30,6 @@
                         <p><a href="{{ delete_audio_url }}?paragraph_number={{ value.paragraph.paragraph_number }}&audio_id={{ track.audio_id.pk }}"> Удалить аудиозапись </a></p>
                     {% endfor %}
 
-                    <p><a href="{{ delete_paragraph_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"> Удалить абзац {{ value.paragraph.paragraph_number }}</a></p>
                 {% endfor %}
             </div>
         </div>

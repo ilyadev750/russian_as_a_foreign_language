@@ -1523,6 +1523,80 @@ a:focus {
     text-align: center;
 }
 
+.center-editor {
+    background-color: rgb(212, 205, 205);
+    margin: 9px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border-radius: 3%;
+}
+
+.lection-editor-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1);
+}
+
+.lection-editor-container li {
+    padding-left: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.lection-editor-container ol {
+    margin-bottom: 2px;
+}
+
+.center-editor a {
+    color:#181818;
+    vertical-align: middle;
+}
+
+.lection-editor-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 30px;
+    color:#181818;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1);
+    text-align: center;
+}
+
+.button-container>p {
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 0px;
+}
+
+
+@media (min-width: 900px) {
+
+    .lection-editor-container {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: repeat(1);
+    }
+
+    .left-editor {
+        grid-column: 1/3;
+    }
+
+    .center-editor {
+        grid-column: 3/11;
+        background-color: rgb(212, 205, 205);
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    .right-editor {
+        grid-column: 11/13;
+    }
+
+}
+
 .lections-list {
     margin-top: 30px;
     text-align: left;
@@ -1564,4 +1638,25 @@ a:focus {
 
 #red {
     color: red;
+}
+
+.myButton {
+	background-color:#092a49;
+	border-radius:19px;
+	border:1px solid #337bc4;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: 16px;
+	padding: 4px 14px;
+	text-decoration:none;
+	/* text-shadow:0px 1px 0px #4e7091; */
+}
+.myButton:hover {
+	background-color:#447cb3;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
 }

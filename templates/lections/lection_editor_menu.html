@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<div class="about mt-125">
+{% comment %} <div class="about mt-125">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-9">
@@ -17,6 +17,25 @@
             </div>
         </div>
     </div>
+</div> {% endcomment %}
+
+
+<div class="about mt-125">
+    <div class="lection-editor-title">Меню редактора лекции</div>
+    <div class="lection-editor-container">
+        <div class="left-editor"></div>
+        <div class="center-editor">
+            <ol>
+            {% for key, value in actions.items %}
+                <li><a href="{{ value }}">{{ key }}</a></li>
+            {% endfor %}
+            </ol>
+        </div>
+        <div class="right-editor"></div>
+    </div>
+    <div class="button-container">
+    <p><a class="myButton" href="{% url 'home' %}">Вернуться на главную страницу</a></p>
+    </div>
 </div>
-<p><a href="{% url 'home' %}">Вернуться на главную страницу</a></p>
+
 {% endblock %}

@@ -40,7 +40,7 @@
                     <a href="{% url 'get_lection_dictionary' lection_slug=lection_slug %}">Посмотреть словарь</a>
                     {% if user.is_superuser %}
                         <div>
-                            <a class="" href="{% url 'open_lection_editor' lection_slug=lection_slug %}">Приступить к созданию лекции</a>
+                            <a class="" href="{% url 'open_lection_editor' lection_slug=lection_slug %}">Перейти в редактор лекции</a>
                         </div>
                     {% endif %}
                 </div>

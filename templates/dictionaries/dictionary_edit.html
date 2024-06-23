@@ -22,9 +22,9 @@
                             <tr id="dict-table-style">
                               <th id="rus" "dict-table-style">{{value.termin_in_rus}}</th>
                               <th id="eng" "dict-table-style">{{value.termin_in_eng}}</th>
-                              {% comment %} {% if user.is_superuser %}
+                              {% if user.is_superuser %}
                                 <th id="eng" "dict-table-style"><a href="{% url 'delete_dictionary_item' lection_slug=lection.slug pk=value.pk %}">Удалить</a></th>
-                              {% endif %} {% endcomment %}
+                              {% endif %}
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -33,16 +33,16 @@
 
                 {% if user.is_superuser %}
                 <div>
-                    <a class="" href="{% url 'open_lection_editor' lection_slug=lection.slug %}">Перейти в меню редактора лекции</a>
+                    <a class="" href="{% url 'open_lection_editor' lection_slug=lection.slug %}">Приступить к созданию лекции</a>
                 </div>
                 {% endif %}
 
                 <div>
                     <a class="" href="{% url 'get_lection_content' lection_slug=lection.slug %}">Приступить к изучению лекции</a>
                 </div>
-                {% comment %} <div>
+                <div>
                     <a class="" href="{% url 'create_new_dictionary' lection_slug=lection.slug %}">Вернуться к редактированию</a>
-                </div> {% endcomment %}
+                </div>
             </div>
         </div>
     </div>
