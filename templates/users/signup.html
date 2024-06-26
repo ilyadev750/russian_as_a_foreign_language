@@ -8,7 +8,7 @@
 
 
 {% block content %}
-<div class="about mt-125">
+{% comment %} <div class="about mt-125">
   <div class="container">
       <div class="row align-items-center">
           <div class="col-md-9">
@@ -19,11 +19,11 @@
                     {% for field in form %}
                     <p>
                       {{ field.label_tag }}<br>
-                      {{ field }}
+                      {{ field }} {% endcomment %}
                       {% comment %} {% if field.help_text %}
                         <small style="display: none">{{ field.help_text }}</small>
                       {% endif %} {% endcomment %}
-                      {% for error in field.errors %}
+                      {% comment %} {% for error in field.errors %}
                         <p style="color: red">{{ error }}</p>
                       {% endfor %}
                     </p>
@@ -34,5 +34,28 @@
             </div>
         </div>
     </div>
+</div> {% endcomment %}
+
+<div class="about mt-125">
+    <div class="signup-form">
+        <div class="signup-left"></div>
+        <div class="signup-center">
+            <div class="signup-title">Регистрация</div>
+            <form class="" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field }}
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% endfor %}
+                <div class="signup-buttons">
+                    <button class="myButton" type="submit">Зарегистрироваться</button>
+                </div>
+            </form>
+        </div>
+        <div class="signup-right"></div>
+    </div>
 </div>
+
 {% endblock %}

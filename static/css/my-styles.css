@@ -1,10 +1,13 @@
 .black-profile-text {
-    color: #181818;
+    color: hsl(0, 0%, 9%);
     font-size: 18px;
 }
+/* login, signup, lections */
 
 .lection-create-title, 
-.login-title {
+.login-title,
+.reset-title,
+.signup-title {
     text-align: center;
     margin-bottom: 35px;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -13,7 +16,9 @@
 }
 
 .create-lection-form,
-.login-form {
+.login-form,
+.reset-form,
+.signup-form {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(1);
@@ -29,12 +34,15 @@
 }
 
 .create-lection-group,
-.login-group {
+.login-group,
+.signup-group {
     position: relative;
 }
 
 .create-lection-field,
-.login-field {
+.login-field,
+.reset-field,
+.signup-field {
     height: 50px;
     color: rgb(22, 20, 20);
     border: 1px solid transparent;
@@ -51,7 +59,9 @@
 }
 
 .create-lection-center,
-.login-center {
+.login-center,
+.reset-center,
+.signup-center {
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
     color: rgb(22, 20, 20) !important;
@@ -67,19 +77,25 @@
 @media (min-width: 900px) {
 
     .create-lection-form,
-    .login-form {
+    .login-form,
+    .reset-form,
+    .signup-form {
         display: grid;
         grid-template-columns: repeat(14, 1fr);
         grid-template-rows: repeat(1);
     }
 
     .create-lection-left,
-    .login-left {
+    .login-left,
+    .reset-left,
+    .signup-left {
         grid-column: 1/6;
     }
 
     .create-lection-center,
-    .login-center {
+    .login-center,
+    .reset-center,
+    .signup-center {
         grid-column: 6/10;
         /* background-color: rgb(212, 205, 205); */
         font-family: Georgia, 'Times New Roman', Times, serif;
@@ -87,12 +103,16 @@
     }
 
     .create-lection-right,
-    .login-right {
+    .login-right,
+    .reset-right,
+    .signup-right {
         grid-column: 10/15;
     }
 
     .create-lection-field,
-    .login-field {
+    .login-field,
+    .reset-field,
+    .signup-field {
         height: 50px;
         color: rgb(22, 20, 20);
         border: 1px solid transparent;
@@ -109,3 +129,21 @@
     }
 
 }
+
+.login-buttons,
+.reset-buttons,
+.signup-buttons {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.login-buttons a {
+    margin-left: 15px;
+}
+
+.login-buttons p {
+    margin-top: 15px;
+}
+
+/* ///////////// */

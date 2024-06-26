@@ -6,6 +6,7 @@ from django.contrib.auth.views import (PasswordResetView,
                                        PasswordResetCompleteView,
                                        PasswordChangeView,
                                        PasswordChangeDoneView)
+from .forms import UserPasswordResetForm
 
 
 urlpatterns = [
@@ -16,6 +17,7 @@ urlpatterns = [
     path('logout/', logout_user, name="logout_user"),
     path('password-reset/',
          PasswordResetView.as_view(
+            form_class=UserPasswordResetForm,
             template_name="users/password_reset_form.html",
             email_template_name="users/password_reset_email.html",
             success_url=reverse_lazy("password_reset_done")

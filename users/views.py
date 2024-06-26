@@ -22,9 +22,16 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
+
+            user = User()
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.email = form.cleaned_data['email']
+            user.username = user.email
+            user.password = form.cleaned_data['password2']
             user.is_active = False
             user.save()
+            
             mail_subject = 'Активируйте ваш аккаунт!'
             message = render_to_string('users/activation_email.html', {
                 'user': user,
