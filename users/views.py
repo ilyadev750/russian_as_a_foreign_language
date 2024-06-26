@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import SignupForm, EmailForm
+from .forms import SignupForm, EmailForm, LoginForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
@@ -76,14 +76,14 @@ def login_user(request):
             login(request, user)
             return redirect("home")
         else:
-            form = AuthenticationForm()
+            form = LoginForm()
             context = {
                 "form": form,
                 "error": 'Неверный пользователь или пароль!'
                 }
             return render(request, "users/login.html", context)
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
         error = ''
     return render(request, "users/login.html", {"form": form, "error": error})
 

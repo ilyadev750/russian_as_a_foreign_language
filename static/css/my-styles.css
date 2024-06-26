@@ -1,0 +1,111 @@
+.black-profile-text {
+    color: #181818;
+    font-size: 18px;
+}
+
+.lection-create-title, 
+.login-title {
+    text-align: center;
+    margin-bottom: 35px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 30px;
+    color:#181818;
+}
+
+.create-lection-form,
+.login-form {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1);
+    text-align: center;
+}
+
+.create-lection-form p {
+    margin-bottom: 0px;
+}
+
+.login-form p {
+    margin-bottom: 0px;
+}
+
+.create-lection-group,
+.login-group {
+    position: relative;
+}
+
+.create-lection-field,
+.login-field {
+    height: 50px;
+    color: rgb(22, 20, 20);
+    border: 1px solid transparent;
+    border-color: #181818;
+    width: 80%;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    margin-bottom: 40px;
+}
+
+.create-lection-center,
+.login-center {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    color: rgb(22, 20, 20) !important;
+}
+
+/* .center-login {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1);
+    background-color: rgb(212, 205, 205);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+} */
+
+@media (min-width: 900px) {
+
+    .create-lection-form,
+    .login-form {
+        display: grid;
+        grid-template-columns: repeat(14, 1fr);
+        grid-template-rows: repeat(1);
+    }
+
+    .create-lection-left,
+    .login-left {
+        grid-column: 1/6;
+    }
+
+    .create-lection-center,
+    .login-center {
+        grid-column: 6/10;
+        /* background-color: rgb(212, 205, 205); */
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        text-align: center;
+    }
+
+    .create-lection-right,
+    .login-right {
+        grid-column: 10/15;
+    }
+
+    .create-lection-field,
+    .login-field {
+        height: 50px;
+        color: rgb(22, 20, 20);
+        border: 1px solid transparent;
+        border-color: #181818;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+        margin-bottom: 40px;
+    }
+
+}

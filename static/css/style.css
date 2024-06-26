@@ -222,7 +222,7 @@ a:focus {
         position: absolute;
         width: 100%;
         top: 35px;
-        padding: 20px 60px;
+        padding: 20px 30px;
         background: #092a49!important;
         z-index: 9;
     }
@@ -301,7 +301,7 @@ a:focus {
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(9, 42, 73, .7);
+    background: rgba(7, 7, 8, 0.615);
     z-index: 1;
 }
 
@@ -1534,6 +1534,12 @@ a:focus {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(1);
+}
+
+.center-editor p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 12px;
 }
 
 .lection-editor-container li {
