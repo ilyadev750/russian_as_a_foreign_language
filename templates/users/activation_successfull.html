@@ -8,19 +8,16 @@
 
 
 {% block content %}
+
 <div class="about mt-125">
-  <div class="container">
-      <div class="row align-items-center">
-          <div class="col-md-9">
-              <div class="lection-header">
-                <h2>Аккаунт успешно активирован!</h2>
-                    <p>
-                        {{ success_activation }}
-                    </p>
-                <a href="{% url 'login_user' %}" class="dropdown-item">Войти в личный кабинет</a>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="text-container">
+        <div class="text-container-left"></div>
+        <div class="text-container-center">
+            <div class="text-title">Аккаунт успешно активирован!</div>
+            <a href="{% url 'login_user' %}"><button class="myButton" type="submit" name="save">Войти в личный кабинет</button></a>
+        </div>
+        <div class="text-container-right"></div> 
+    </div>
 </div>
+
 {% endblock %}

@@ -46,7 +46,7 @@
                 {% for field in form %}
                     {{ field }}
                     {% for error in field.errors %}
-                        {{ error }}
+                        <p>{{ error }}</p>
                     {% endfor %}
                 {% endfor %}
                 <div class="signup-buttons">

@@ -22,13 +22,9 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-
-            user = User()
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            user.email = form.cleaned_data['email']
+            
+            user = form.save(commit=False)
             user.username = user.email
-            user.password = form.cleaned_data['password2']
             user.is_active = False
             user.save()
             
@@ -49,7 +45,7 @@ def signup(request):
             )
             print(status)
             context = {
-                'activation': 'Пожалуйста, подвтердите вашу электронную почту для завершения регистрации!'
+                'activation': 'Пожалуйста, подвтердите вашу электронную почту для завершения регистрации! Перейдите по ссылке, указанной в письме.'
                 }
             return render(request, 'users/send_activation_link.html', context=context)
     else:
@@ -136,7 +132,7 @@ def get_activation_link(request):
                 )
                 print(status)
                 context = {
-                    'activation': 'Пожалуйста, подвтердите вашу электронную почту для завершения регистрации!'
+                    'activation': 'Пожалуйста, подвтердите вашу электронную почту для завершения регистрации! Перейдите по ссылке, указанной в письме.'
                     }
                 return render(request, 'users/send_activation_link.html', context=context)
     context = {
@@ -144,6 +140,9 @@ def get_activation_link(request):
         'error': ''
     }
     return render(request, 'users/send_activation_link_again.html', context=context)
+
+
+
 
 
 # добавить реализацию изменения пароля

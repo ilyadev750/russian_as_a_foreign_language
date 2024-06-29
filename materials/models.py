@@ -34,7 +34,7 @@ class LectionImage(models.Model):
     class Meta:
         verbose_name = "Изображение"
         verbose_name_plural = "Изображения в лекциях"
-        unique_together = ('lection_id', 'image_id', 'position')
+        # unique_together = ('lection_id', 'image_id', 'position')
 
     def __str__(self) -> str:
         return f'{self.lection_id} - {self.image_id} - {self.position}'
@@ -48,7 +48,7 @@ class LectionAudio(models.Model):
     class Meta:
         verbose_name = "Аудиозапись"
         verbose_name_plural = "Аудиозаписи в лекциях"
-        unique_together = ('lection_id', 'audio_id', 'position')
+        # unique_together = ('lection_id', 'audio_id', 'position')
         
 
     def __str__(self) -> str:

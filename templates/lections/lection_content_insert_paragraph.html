@@ -43,21 +43,17 @@
             <div class="text-title">{{ lection_name }}</div>
             {% for key, value in content.items %}
 
-                <p>{{ value.paragraph.paragraph_number }} абзац</p>
-                <p>{{ value.paragraph.paragraph }}</p>
-
                 <div class="paragraph-container-buttons">
-                    <a href="{{ replace_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"><button class="myButtonGreen" type="submit" name="save">Изменить абзац</button></a>
+                    <a href="{{ insert_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"><button class="myButtonGreen" type="submit" name="save">Вставить новый абзац</button></a>
                 </div>
+
+                <p>{{ value.paragraph.paragraph }}</p>
 
                 <div id="image-audio-name">
                     {% for image in value.images %}
                         <img src="{{ image.image_id.image.url }}">
                         <p>{{ image.image_id.image_name }}</p>
                     {% endfor %}
-                    <div class="paragraph-container-buttons">
-                        <a href="{{ image_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"><button class="myButtonGreen" type="submit" name="save">Добавить изображение </button></a>
-                    </div>
                 </div>
                 
                 <div id="image-audio-name">
@@ -67,10 +63,8 @@
                     </audio>
                     <p>{{ track.audio_id.audio_name }}</p>
                 {% endfor %}
-                <div class="paragraph-container-buttons">
-                    <a href="{{ audio_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"><button class="myButtonGreen" type="submit" name="save">Добавить аудиозапись </button></a>
                 </div>
-                </div>
+
             {% endfor %}
 
         <div class="paragraph-container-buttons">
@@ -84,4 +78,3 @@
 </div>
 
 {% endblock %}
-

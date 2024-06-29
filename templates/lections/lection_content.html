@@ -7,35 +7,42 @@
 
 {% block content %}
 
-<div class="about mt-125">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-9">
-                {% for key, value in content.items %}
-                    <p>{{ value.paragraph.paragraph }}</p>
+<div class="about mt-70">
+    <div class="paragraph-container">
+        <div class="paragraph-container-left"></div>
+        <div class="paragraph-container-center">
+            <div class="text-title">{{ lection_name }}</div>
+            {% for key, value in content.items %}
+
+                <p>{{ value.paragraph.paragraph }}</p>
+
+                <div id="image-audio-name">
                     {% for image in value.images %}
-                        <p><img src="{{ image.image_id.image.url }}" width="300px"></p>
+                        <img src="{{ image.image_id.image.url }}">
                         <p>{{ image.image_id.image_name }}</p>
                     {% endfor %}
-
-                    {% for track in value.audio %}
-                        <audio controls>
-                            <source src="{{ track.audio_id.audio.url }}" type="audio/wav">
-                        </audio>
-                        <p>{{ track.audio_id.audio_name }}</p>
-                    {% endfor %}
-
-                {% comment %} {% for key, value in paragraphs.items %}
-                    <p>{{ value }}</p>
-                    {}
-                    <p><img src="{{ images.1.image_id.image.url }}" width="300px"></p> {% endcomment %}
-                    {% comment %} <p>{{ images.key }}</p> {% endcomment %}
-                    {% comment %} <p>{{ paragraph.paragraph_id.image}}</p> {% endcomment %}
+                </div>
+                
+                <div id="image-audio-name">
+                {% for track in value.audio %}
+                    <audio controls>
+                        <source src="{{ track.audio_id.audio.url }}" type="audio/wav">
+                    </audio>
+                    <p>{{ track.audio_id.audio_name }}</p>
                 {% endfor %}
-            </div>
+                </div>
+
+            {% endfor %}
+
+            {% if user.is_superuser %}
+                <a href="{% url 'open_lection_editor' lection_slug %}"><button class="myButton" type="submit" name="save">Назад в редактор</button></a>
+            {% endif %}
+
         </div>
+
+        <div class="paragraph-container-right"></div>
     </div>
 </div>
-<p><a class="" href="{% url 'open_lection_editor' lection_slug=lection_slug %}">Вернуться в меню редактора</a></p>
+            
 
 {% endblock %}

@@ -1,7 +1,7 @@
 from django import forms
 from .models import Lection, Paragraph, Specialization
 from django.forms import modelformset_factory
-from django.forms.widgets import TextInput, Select
+from django.forms.widgets import TextInput, Select, NumberInput, Textarea
 
 
 class CreateLectionForm(forms.Form):
@@ -25,15 +25,14 @@ class CreateLectionForm(forms.Form):
                    'class': 'create-lection-field'}
             )
         )
-            
+        
 
 class AddParagraphForm(forms.ModelForm):
     class Meta:
         model = Paragraph
-        fields = ["paragraph", "paragraph_number"]
+        fields = ["paragraph"]
         labels = {
             "paragraph": 'Абзац',
-            "paragraph_number": 'Номер абзаца',
         }
 
 
@@ -48,6 +47,9 @@ class ChangeParagraphForm(forms.ModelForm):
 
 AddParagraphFormset = modelformset_factory(
     model=Paragraph,
-    fields=["paragraph", "paragraph_number"],
-    extra=3
+    fields=["paragraph"],
+    extra=3,
+    widgets= {
+        'paragraph': Textarea(attrs={'class': 'my-textarea', 'placeholder': 'Абзац'}),
+    }
     )

@@ -132,7 +132,7 @@
                             <div class="dropdown-menu">
                                 <a href="{% url 'login_user' %}" class="dropdown-item">Войти</a>
                                 <a href="{% url 'signup' %}" class="dropdown-item">Регистрация</a>
-                                <a href="{% url 'get_activation_link' %}" class="dropdown-item">Активировать аккаунт</a>
+                                {% comment %} <a href="{% url 'get_activation_link' %}" class="dropdown-item">Активировать аккаунт</a> {% endcomment %}
                             </div>
                         </div>
                         {% endif %}

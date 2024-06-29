@@ -71,21 +71,6 @@ def lection_editor_menu(request, lection_slug):
 
 def add_lection_content(request, lection_slug):
 
-    if request.method == 'POST':
-        formset = AddParagraphFormset(request.POST)
-        if formset.is_valid():
-            lection = Lection.objects.get(slug=lection_slug)
-            for form in formset:
-                try:
-                    paragraph = Paragraph()
-                    paragraph.lection_id = lection
-                    paragraph.paragraph = form.cleaned_data['paragraph']
-                    paragraph.paragraph_number = form.cleaned_data['paragraph_number']
-                    paragraph.save()
-                except KeyError:
-                    break
-            return redirect('add_lection_content', lection_slug=lection.slug)
-        
     lection = Lection.objects.get(slug=lection_slug)
     exist_lection_content = Paragraph.objects.filter(lection_id=lection).order_by('-paragraph_number')
     if list(exist_lection_content):
@@ -93,11 +78,31 @@ def add_lection_content(request, lection_slug):
     else:
         number_of_last_paragraph = 0
 
+    if request.method == 'POST':
+        formset = AddParagraphFormset(request.POST)
+        if formset.is_valid():
+            lection = Lection.objects.get(slug=lection_slug)
+
+            if 'return' in request.POST:
+                return redirect('open_lection_editor', lection_slug=lection.slug)
+
+            for form in formset:
+                try:
+                    paragraph = Paragraph()
+                    paragraph.lection_id = lection
+                    paragraph.paragraph = form.cleaned_data['paragraph']
+                    number_of_last_paragraph += 1
+                    paragraph.paragraph_number = number_of_last_paragraph
+                    paragraph.save()
+                except KeyError:
+                    break
+            return redirect('add_lection_content', lection_slug=lection.slug)
+        
+    
     formset = AddParagraphFormset(queryset=Paragraph.objects.none())
     context = {
         'formset': formset,
         'lection_slug': lection_slug,
-        'last_paragraph': number_of_last_paragraph
     }
     return render(request, 'lections/add_paragraph.html', context)
 
@@ -106,21 +111,36 @@ def insert_paragraph_in_the_middle(request, lection_slug):
     if request.method == 'POST':
         form = AddParagraphForm(request.POST)
         if form.is_valid():
+
             lection = Lection.objects.get(slug=lection_slug)
-            paragraph_number = form.cleaned_data['paragraph_number']
+            paragraph_number = int(request.GET.get('paragraph_number'))
+
             lection_paragraphs = Paragraph.objects.filter(
                 Q(lection_id=lection) &
                 Q(paragraph_number__gte=paragraph_number))
+            images = LectionImage.objects.filter(
+                Q(lection_id=lection) &
+                Q(position__gte=paragraph_number))
+            audio = LectionAudio.objects.filter(
+                Q(lection_id=lection) &
+                Q(position__gte=paragraph_number))
+
             for paragraph in lection_paragraphs:
                 paragraph.paragraph_number += 1
                 paragraph.save()
+            for image in images:
+                image.position += 1
+                image.save()
+            for track in audio:
+                track.position += 1
+                track.save()
 
             new_paragraph = Paragraph()
             new_paragraph.lection_id = lection
-            new_paragraph.paragraph = form.cleaned_data['paragraph']
-            new_paragraph.paragraph_number = form.cleaned_data['paragraph_number']
+            new_paragraph.paragraph_number = paragraph_number
+            new_paragraph.paragraph = form.cleaned_data["paragraph"]
             new_paragraph.save()
-            return redirect('get_lection_content_for_changing', lection_slug=lection.slug)
+            return redirect('get_lection_content_insert_paragraph', lection_slug=lection.slug)
 
     form = AddParagraphForm()
     context = {
@@ -131,7 +151,7 @@ def insert_paragraph_in_the_middle(request, lection_slug):
 
 
 def get_profile_lections(request, profile_slug):
-
+    # add pagination
     try:
         profile_slug = Specialization.objects.get(slug=profile_slug)
     except ObjectDoesNotExist:
@@ -147,8 +167,10 @@ def get_profile_lections(request, profile_slug):
 
 def get_lection_content(request, lection_slug):
 
+    lection_name = Lection.objects.get(slug=lection_slug).lection_name
     result = get_content(lection_slug=lection_slug)
     context = {
+        'lection_name': lection_name,
         'content': result,
         'lection_slug': lection_slug,
     }
@@ -172,6 +194,20 @@ def get_lection_content_for_changing(request, lection_slug):
     }
 
     return render(request, 'lections/lection_content_change.html', context)
+
+def get_lection_content_insert_paragraph(request, lection_slug):
+
+    content = get_content(lection_slug=lection_slug)
+    insert_url = reverse('insert_paragraph_in_the_middle', args=[lection_slug])
+
+    context = {
+        'content': content,
+        'insert_url': insert_url,
+        'lection_slug': lection_slug,
+    }
+
+    return render(request, 'lections/lection_content_insert_paragraph.html', context)
+
 
 
 def get_lection_content_for_deleting(request, lection_slug):

@@ -8,7 +8,7 @@
 
 
 {% block content %}
-<div class="about mt-125">
+{% comment %} <div class="about mt-125">
   <div class="container">
       <div class="row align-items-center">
           <div class="col-md-9">
@@ -23,7 +23,7 @@
                       {% comment %} {% if field.help_text %}
                         <small style="display: none">{{ field.help_text }}</small>
                       {% endif %} {% endcomment %}
-                    </p>
+                    {% comment %} </p>
                     <p style="color: red">{{ error }}</p>
                     {% endfor %}
                   <button type="submit">Активировать</button>
@@ -31,6 +31,14 @@
               </div>
             </div>
         </div>
-    </div>
-</div>
+    </div> {% endcomment %}
+{% comment %} </div> {% endcomment %}
+{% comment %} 
+<div class="about mt-125">
+    <div class="signup-form">
+        <div class="signup-left"></div>
+        <div class="signup-center">
+            <div class="signup-title">Вве</div> {% endcomment %}
+
+
 {% endblock %}
