@@ -8,19 +8,17 @@
 {% block content %}
 
 <div class="about mt-125">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-9">
-                <div class="lection-header">
-                    <h3>Лекции по профилю</h3>
-                </div>
-                <div class="lections-list">
-                    {% for lection in lections %}
-                        <p><a class="" href="{% url 'get_lection_dictionary' lection_slug=lection.slug %}">{{ lection.lection_name }}</a></p>
-                    {% endfor %}
-                </div>
-            </div>
+    <div class="lection-editor-title">Лекции - {{ profile }} профиль</div>
+    <div class="lection-editor-container">
+        <div class="left-editor"></div>
+        <div class="center-editor">
+            <ol>
+            {% for lection in lections %}
+                <li><a class="" href="{% url 'get_lection_dictionary' lection_slug=lection.slug %}">{{ lection.lection_name }}</a></li>
+            {% endfor %}
+            </ol>
         </div>
+        <div class="right-editor"></div>
     </div>
 </div>
 

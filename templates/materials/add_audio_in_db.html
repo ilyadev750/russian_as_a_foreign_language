@@ -7,32 +7,30 @@
 
 {% block content %}
 
-<div class="about mt-125">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-9">
-                <div class="lection-header">
-                    <p>Загрузить аудиозаписи в базу данных: </p>
-                    <form action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %} 
-                        {{ formset.management_form }} 
-                        {% for form in formset %}
-                            {% for field in form %}
-                                <p>{{ field.label_tag }}</p>
-                                <p>{{ field }}</p>
-                            {% endfor %}
-                        {% endfor %}
-                        <div>
-                            <button class="save-button" type="submit" name="save">Добавить аудиозаписи</button>
-                        </div>
-                    </form>
-                    <div>
-                        <a class="" href="{% url 'open_lection_editor' lection_slug=lection_slug %}">Вернуться в меню редактора</a>
-                    </div>
+
+<div class="about mt-70">
+    <div class="paragraph-container">
+        <div class="paragraph-container-left"></div>
+        <div class="paragraph-container-center">
+            <div class="text-title">Загрузить аудиозаписи в базу данных: </div>
+            <form id="image-audio-form" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ formset.management_form }} 
+                {% for form in formset %}
+                    {% for field in form %}
+                        <p>{{ field }}</p>
+                    {% endfor %}
+                {% endfor %}
+                <div class="signup-buttons">
+                    <button class="myButtonGreen" type="submit" name="save">Добавить</button>
+                    <button class="myButton" type="submit" name="return">Назад в редактор</button>
                 </div>
-            </div>
+            </form>
+
         </div>
+        <div class="paragraph-container-right"></div>
     </div>
 </div>
+        
 
 {% endblock %}

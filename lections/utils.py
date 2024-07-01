@@ -7,16 +7,22 @@ import re
 def get_lection_content(lection_slug):
 
     content = {}
+    result = []
 
     lection = Lection.objects.get(slug=lection_slug)
     paragraphs = (
         Paragraph.objects.filter(lection_id=lection)
                   .order_by('paragraph_number')
         )
-    images = (LectionImage.objects.filter(lection_id=lection)
-              .select_related('image_id'))
-    audio = (LectionAudio.objects.filter(lection_id=lection)
-              .select_related('audio_id'))
+    
+    images = LectionImage.objects.filter(paragraph_id__in=paragraphs)
+    images = images.select_related('paragraph_id').select_related('image_id')
+
+            
+    audio = LectionAudio.objects.filter(paragraph_id__in=paragraphs)
+    audio = audio.select_related('paragraph_id').select_related('audio_id')
+
+
     pattern_1 = "(\D1\D\w+\D1\D)"
     pattern_2 = "\D1\D"
 
@@ -31,9 +37,12 @@ def get_lection_content(lection_slug):
 
     
     for image in images:
-        content[image.position]['images'].append(image)
+        content[image.paragraph_id.paragraph_number]['images'].append(image)
 
     for track in audio:
-        content[track.position]['audio'].append(track)
+        content[track.paragraph_id.paragraph_number]['audio'].append(track)
 
-    return content
+    result.append(content)
+    result.append(lection.lection_name)
+
+    return result

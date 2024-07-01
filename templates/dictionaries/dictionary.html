@@ -7,45 +7,36 @@
 
 {% block content %}
 
-<div class="about mt-125">
-    <div class="container">
-        <div id="row align-items-center">
-            <div class="col-md-9">
-                <div class="lection-header">
-                    <h3>Словарь лекции {{ lection.lection_name }}</h3>
-                    {{ red }}
-                </div>
-                <div class="lections-list">
-                    <table class="dict-table">
-                        <tbody>
-                            {% for value in values %}
-                            <tr id="dict-table-style">
-                              <th id="rus" "dict-table-style">{{value.termin_in_rus}}</th>
-                              <th id="eng" "dict-table-style">{{value.termin_in_eng}}</th>
-                              {% comment %} {% if user.is_superuser %}
-                                <th id="eng" "dict-table-style"><a href="{% url 'delete_dictionary_item' lection_slug=lection.slug pk=value.pk %}">Удалить</a></th>
-                              {% endif %} {% endcomment %}
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
 
+<div class="about mt-70">
+    <div class="text-container">
+        <div class="text-container-left"></div>
+        <div class="text-form-center">
+            <div class="text-title">Словарь лекции {{ lection.lection_name }}</div>
+            <table class="minimalistBlack">
+                <thead>
+                <tr>
+                <th>Термин на русском</th>
+                <th>Термин на английском</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for value in values %}
+                    <tr>
+                        <td>{{ value.termin_in_rus }}</td><td>{{ value.termin_in_eng }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="paragraph-container-buttons">
                 {% if user.is_superuser %}
-                <div>
-                    <a class="" href="{% url 'open_lection_editor' lection_slug=lection.slug %}">Перейти в меню редактора лекции</a>
-                </div>
+                <a href="{% url 'open_lection_editor' lection_slug=lection.slug %}"><button class="myButton" type="submit" name="save">Назад в редактор</button></a>
                 {% endif %}
-
-                <div>
-                    <a class="" href="{% url 'get_lection_content' lection_slug=lection.slug %}">Приступить к изучению лекции</a>
-                </div>
-                {% comment %} <div>
-                    <a class="" href="{% url 'create_new_dictionary' lection_slug=lection.slug %}">Вернуться к редактированию</a>
-                </div> {% endcomment %}
+                <a href="{% url 'get_lection_content' lection_slug=lection.slug %}"><button class="myButton" type="submit" name="save">Приступить к лекции</button></a>
             </div>
-        </div>
+        <div class="paragraph-container-right"></div>
     </div>
 </div>
+
 
 {% endblock %}

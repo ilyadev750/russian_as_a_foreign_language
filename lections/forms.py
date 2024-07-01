@@ -34,6 +34,9 @@ class AddParagraphForm(forms.ModelForm):
         labels = {
             "paragraph": 'Абзац',
         }
+        widgets= {
+            'paragraph': Textarea(attrs={'class': 'my-textarea', 'placeholder': 'Абзац', 'blank': 'True'}),
+        }
 
 
 class ChangeParagraphForm(forms.ModelForm):
@@ -42,6 +45,9 @@ class ChangeParagraphForm(forms.ModelForm):
         fields = ["paragraph"]
         labels = {
             "paragraph": 'Абзац',
+        }
+        widgets= {
+            'paragraph': Textarea(attrs={'class': 'my-textarea', 'placeholder': 'Абзац'}),
         }
 
 

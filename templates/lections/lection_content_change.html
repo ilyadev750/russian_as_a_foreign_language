@@ -7,35 +7,6 @@
 
 {% block content %}
 
-{% comment %} <div class="about mt-125">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-9">
-                {% for key, value in content.items %}
-                    <p>{{ value.paragraph.paragraph }}</p>
-
-                    {% for image in value.images %}
-                        <p><img src="{{ image.image_id.image.url }}" width="300px"></p>
-                        <p>{{ image.image_id.image_name }}</p>
-                    {% endfor %}
-
-                    {% for track in value.audio %}
-                        <audio controls>
-                            <source src="{{ track.audio_id.audio.url }}" type="audio/wav">
-                        </audio>
-                        <p>{{ track.audio_id.audio_name }}</p>
-                    {% endfor %}
-
-                    <p><a href="{{ replace_url }}?paragraph_number={{ value.paragraph.paragraph_number }}">{{ value.paragraph.paragraph_number }} абзац изменить </a></p>
-                    <p><a href="{{ image_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"> добавить изображение </a></p>
-                    <p><a href="{{ audio_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"> добавить аудиозапись </a></p>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
-<p><a class="" href="{% url 'open_lection_editor' lection_slug=lection_slug %}">Вернуться в меню редактора</a></p> {% endcomment %}
-
 <div class="about mt-70">
     <div class="paragraph-container">
         <div class="paragraph-container-left"></div>
@@ -61,15 +32,15 @@
                 </div>
                 
                 <div id="image-audio-name">
-                {% for track in value.audio %}
-                    <audio controls>
-                        <source src="{{ track.audio_id.audio.url }}" type="audio/wav">
-                    </audio>
-                    <p>{{ track.audio_id.audio_name }}</p>
-                {% endfor %}
-                <div class="paragraph-container-buttons">
-                    <a href="{{ audio_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"><button class="myButtonGreen" type="submit" name="save">Добавить аудиозапись </button></a>
-                </div>
+                    {% for track in value.audio %}
+                        <audio controls>
+                            <source src="{{ track.audio_id.audio.url }}" type="audio/wav">
+                        </audio>
+                        <p>{{ track.audio_id.audio_name }}</p>
+                    {% endfor %}
+                    <div class="paragraph-container-buttons">
+                        <a href="{{ audio_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"><button class="myButtonGreen" type="submit" name="save">Добавить аудиозапись </button></a>
+                    </div>
                 </div>
             {% endfor %}
 

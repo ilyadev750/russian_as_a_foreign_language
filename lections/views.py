@@ -109,38 +109,23 @@ def add_lection_content(request, lection_slug):
 
 def insert_paragraph_in_the_middle(request, lection_slug):
     if request.method == 'POST':
+        if 'return' in request.POST:
+            return redirect('open_lection_editor', lection_slug)
         form = AddParagraphForm(request.POST)
         if form.is_valid():
 
             lection = Lection.objects.get(slug=lection_slug)
             paragraph_number = int(request.GET.get('paragraph_number'))
 
-            lection_paragraphs = Paragraph.objects.filter(
-                Q(lection_id=lection) &
-                Q(paragraph_number__gte=paragraph_number))
-            images = LectionImage.objects.filter(
-                Q(lection_id=lection) &
-                Q(position__gte=paragraph_number))
-            audio = LectionAudio.objects.filter(
-                Q(lection_id=lection) &
-                Q(position__gte=paragraph_number))
-
-            for paragraph in lection_paragraphs:
-                paragraph.paragraph_number += 1
-                paragraph.save()
-            for image in images:
-                image.position += 1
-                image.save()
-            for track in audio:
-                track.position += 1
-                track.save()
-
             new_paragraph = Paragraph()
             new_paragraph.lection_id = lection
             new_paragraph.paragraph_number = paragraph_number
             new_paragraph.paragraph = form.cleaned_data["paragraph"]
             new_paragraph.save()
-            return redirect('get_lection_content_insert_paragraph', lection_slug=lection.slug)
+            return redirect('get_lection_content_insert_paragraph', lection_slug)
+    
+        if 'return' in request.POST:
+            return redirect('open_lection_editor', lection_slug)
 
     form = AddParagraphForm()
     context = {
@@ -153,12 +138,13 @@ def insert_paragraph_in_the_middle(request, lection_slug):
 def get_profile_lections(request, profile_slug):
     # add pagination
     try:
-        profile_slug = Specialization.objects.get(slug=profile_slug)
+        profile = Specialization.objects.get(slug=profile_slug)
     except ObjectDoesNotExist:
         return HttpResponseNotFound("<h1>Page not found</h1>")
 
-    lections = Lection.objects.filter(profile_id=profile_slug)
+    lections = Lection.objects.filter(profile_id=profile)
     context = {
+        'profile': profile.specialization_name,
         'lections': lections
     }
 
@@ -167,11 +153,10 @@ def get_profile_lections(request, profile_slug):
 
 def get_lection_content(request, lection_slug):
 
-    lection_name = Lection.objects.get(slug=lection_slug).lection_name
     result = get_content(lection_slug=lection_slug)
     context = {
-        'lection_name': lection_name,
-        'content': result,
+        'content': result[0],
+        'lection_name': result[1],
         'lection_slug': lection_slug,
     }
 
@@ -180,14 +165,15 @@ def get_lection_content(request, lection_slug):
 
 def get_lection_content_for_changing(request, lection_slug):
 
-    content = get_content(lection_slug=lection_slug)
+    result = get_content(lection_slug=lection_slug)
     replace_url = reverse('replace_content', args=[lection_slug])
     image_url = reverse('add_image_to_paragraph', args=[lection_slug])
     audio_url = reverse('add_audio_to_paragraph', args=[lection_slug])
 
     context = {
         'replace_url': replace_url,
-        'content': content,
+        'content': result[0],
+        'lection_name': result[1],
         'image_url': image_url,
         'audio_url': audio_url,
         'lection_slug': lection_slug,
@@ -197,28 +183,29 @@ def get_lection_content_for_changing(request, lection_slug):
 
 def get_lection_content_insert_paragraph(request, lection_slug):
 
-    content = get_content(lection_slug=lection_slug)
+    result = get_content(lection_slug=lection_slug)
     insert_url = reverse('insert_paragraph_in_the_middle', args=[lection_slug])
 
     context = {
-        'content': content,
+        'content': result[0],
         'insert_url': insert_url,
         'lection_slug': lection_slug,
+        'lection_name': result[1],
     }
+
 
     return render(request, 'lections/lection_content_insert_paragraph.html', context)
 
 
-
 def get_lection_content_for_deleting(request, lection_slug):
 
-    content = get_content(lection_slug=lection_slug)
+    result = get_content(lection_slug=lection_slug)
     delete_image_url = reverse('delete_image_from_paragraph', args=[lection_slug])
     delete_audio_url = reverse('delete_audio_from_paragraph', args=[lection_slug])
     delete_paragraph_url = reverse('delete_paragraph_from_lection', args=[lection_slug])
 
     context = {
-        'content': content,
+        'content': result[0],
         'delete_image_url': delete_image_url,
         'delete_audio_url': delete_audio_url,
         'delete_paragraph_url': delete_paragraph_url,
@@ -254,28 +241,6 @@ def delete_paragraph_from_lection(request, lection_slug):
     lection = Lection.objects.get(slug=lection_slug)
     paragraph = Paragraph.objects.get(lection_id=lection, paragraph_number=paragraph_number)
     paragraph.delete()
-
-    lection_paragraphs = Paragraph.objects.filter(
-                Q(lection_id=lection) &
-                Q(paragraph_number__gte=paragraph_number))
-    for paragraph in lection_paragraphs:
-        paragraph.paragraph_number -= 1
-        paragraph.save()
-
-    lection_images = LectionImage.objects.filter(
-                Q(lection_id=lection) &
-                Q(position__gte=paragraph_number))
-    for image in lection_images:
-        image.position -= 1
-        image.save()
-
-    lection_audio = LectionAudio.objects.filter(
-                Q(lection_id=lection) &
-                Q(position__gte=paragraph_number))
-    
-    for audio in lection_audio:
-        audio.position -= 1
-        audio.save()
 
     return redirect('get_lection_content_for_deleting', lection_slug=lection.slug)
 

@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block title %}
-Изменить контент лекции
+Удалить контент лекции
 {% endblock %}
 
 {% block content %}
 
-<div class="about mt-125">
+{% comment %} <div class="about mt-125">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-9">
@@ -35,7 +35,61 @@
         </div>
     </div>
 </div>
-<p><a class="" href="{% url 'open_lection_editor' lection_slug=lection_slug %}">Вернуться в меню редактора</a></p>
+<p><a class="" href="{% url 'open_lection_editor' lection_slug=lection_slug %}">Вернуться в меню редактора</a></p> {% endcomment %}
+
+<div class="about mt-70">
+    <div class="paragraph-container">
+        <div class="paragraph-container-left"></div>
+        <div class="paragraph-container-center">
+            <div class="text-title">{{ lection_name }}</div>
+            {% for key, value in content.items %}
+
+                <p>{{ value.paragraph.paragraph_number }} абзац</p>
+                <p>{{ value.paragraph.paragraph }}</p>
+
+                <div class="paragraph-container-buttons">
+                    {% if value %}
+                        <a href="{{ delete_paragraph_url }}?paragraph_number={{ value.paragraph.paragraph_number }}"><button class="myButtonRed" type="submit" name="save">Удалить абзац {{ value.paragraph.paragraph_number }}</button></a>
+                    {% endif %}
+                </div>
+
+                <div id="image-audio-name">
+                    {% for image in value.images %}
+                        <img src="{{ image.image_id.image.url }}">
+                        <p>{{ image.image_id.image_name }}</p>
+                        <div class="paragraph-container-buttons">
+                            {% if image %}
+                                <a href="{{ delete_image_url }}?paragraph_number={{ value.paragraph.paragraph_number }}&image_id={{ image.image_id.pk  }}"><button class="myButtonRed" type="submit" name="save">Удалить изображение </button></a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div id="image-audio-name">
+                    {% for track in value.audio %}
+                        <audio controls>
+                            <source src="{{ track.audio_id.audio.url }}" type="audio/wav">
+                        </audio>
+                        <p>{{ track.audio_id.audio_name }}</p>
+                        <div class="paragraph-container-buttons">
+                            {% if track %}
+                                <a href="{{ delete_audio_url }}?paragraph_number={{ value.paragraph.paragraph_number }}&audio_id={{ track.audio_id.pk }}"><button class="myButtonRed" type="submit" name="save">Удалить аудиозапись </button></a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <div class="paragraph-container-buttons">
+                <a href="{% url 'open_lection_editor' lection_slug=lection_slug %}"><button class="myButton" type="submit" name="save">Назад в редактор</button></a>
+            </div>
+
+            </div>
+
+        <div class="paragraph-container-right"></div>
+    </div>
+</div>
+
 
 {% endblock %}
 

@@ -7,25 +7,24 @@
 
 {% block content %}
 
-<div class="about mt-125">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-9">
-                <div class="lection-header">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %} 
-                        {{ form.media }} 
-                        {% for field in form %}
-                            <p>{{ field.label_tag }}</p>
-                            <p>{{ field }}</p>
-                        {% endfor %}
-                        <div>
-                            <button class="save-button" type="submit" name="save">Изменить абзац</button>
-                        </div>
-                    </form>
+<div class="about mt-70">
+    <div class="text-container">
+        <div class="text-container-left"></div>
+        <div class="text-form-center">
+            <div class="text-title">Изменить параграф</div>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %} 
+                {{ form.media }} 
+                {% for field in form %}
+                    <p>{{ field }}</p>
+                {% endfor %}
+                <div class="signup-buttons">
+                    <button class="myButtonGreen" type="submit" name="save">Изменить абзац</button>
+                    <button class="myButton" type="submit" name="return">Назад в редактор</button>
                 </div>
-            </div>
+            </form>
         </div>
+        <div class="text-container-right"></div>
     </div>
 </div>
 

@@ -27,9 +27,8 @@ class Audio(models.Model):
 
 
 class LectionImage(models.Model):
-    lection_id = models.ForeignKey(Lection, on_delete=models.CASCADE, verbose_name="Лекция", blank=True, null=True)  
     image_id = models.ForeignKey(Image, on_delete=models.CASCADE, verbose_name="Изображение")
-    position = models.IntegerField(verbose_name="Номер абзаца", default=None)
+    paragraph_id = models.ForeignKey(Paragraph, on_delete=models.CASCADE, verbose_name="Параграф лекции", blank=True, null=True)
 
     class Meta:
         verbose_name = "Изображение"
@@ -37,13 +36,12 @@ class LectionImage(models.Model):
         # unique_together = ('lection_id', 'image_id', 'position')
 
     def __str__(self) -> str:
-        return f'{self.lection_id} - {self.image_id} - {self.position}'
+        return f'{self.image_id} - {self.paragraph_id}'
 
 
 class LectionAudio(models.Model):
-    lection_id = models.ForeignKey(Lection, on_delete=models.CASCADE, verbose_name="Лекция", blank=True, null=True)   
     audio_id = models.ForeignKey(Audio, on_delete=models.CASCADE, verbose_name="Аудиозапись")
-    position = models.IntegerField(verbose_name="Номер абзаца", default=None)
+    paragraph_id = models.ForeignKey(Paragraph, on_delete=models.CASCADE, verbose_name="Параграф лекции", blank=True, null=True)
     
     class Meta:
         verbose_name = "Аудиозапись"
@@ -52,4 +50,4 @@ class LectionAudio(models.Model):
         
 
     def __str__(self) -> str:
-        return f'{self.lection_id} - {self.audio_id} - {self.position}'
+        return f'{self.audio_id} - {self.paragraph_id}'
